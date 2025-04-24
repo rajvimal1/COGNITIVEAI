@@ -3,1526 +3,722 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitonist - Transform Your Fitness Journey</title>
+    <title>Can AI Understand You? Welcome to the Future of Human-Like Intelligence - CogniSphere</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        'primary-dark': '#4f46e5',
+                        secondary: '#8b5cf6',
+                        accent: '#ec4899',
+                        dark: '#0f172a',
+                        'gray-light': '#94a3b8',
+                        'gray-dark': '#1e293b'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        fadeInUp: {
+                            '0%': { 
+                                opacity: '0',
+                                transform: 'translateY(20px)'
+                            },
+                            '100%': { 
+                                opacity: '1',
+                                transform: 'translateY(0)'
+                            }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Base Styles */
-        :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --light: #ffffff;
-            --dark: #0f172a;
-            --gray: #64748b;
-            --gray-light: #94a3b8;
-            --gray-dark: #1e293b;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --gradient-1: linear-gradient(135deg, #4361ee, #7209b7);
-            --gradient-2: linear-gradient(135deg, #3a56d4, #f72585);
-            --gradient-3: linear-gradient(90deg, #4cc9f0, #4361ee, #7209b7, #f72585);
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --radius-sm: 0.25rem;
-            --radius: 0.5rem;
-            --radius-lg: 1rem;
-            --radius-xl: 1.5rem;
-            --radius-full: 9999px;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-            color: var(--light);
-            background: var(--dark);
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
+        
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
         }
-
-        h1 {
-            font-size: 3.5rem;
+        
+        .bg-gradient-secondary {
+            background: linear-gradient(135deg, #4f46e5, #ec4899);
         }
-
-        h2 {
-            font-size: 2.5rem;
+        
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(90deg, #38bdf8, #6366f1, #8b5cf6, #ec4899);
         }
-
-        h3 {
-            font-size: 1.75rem;
+        
+        .transition-all {
+            transition: all 0.3s ease;
         }
-
-        h4 {
-            font-size: 1.25rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        a:hover {
-            color: var(--primary-dark);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-        }
-
-        .section-header p {
-            color: var(--gray-light);
-            font-size: 1.125rem;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-full);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            outline: none;
-        }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-        }
-
-        .btn-primary {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-
-        .btn-primary:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--light);
-            color: var(--light);
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-outline-primary {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-outline-primary:hover {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        .btn-light {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-
-        .btn-light:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .btn-outline-light {
-            background-color: transparent;
-            border: 2px solid var(--light);
-            color: var(--light);
-        }
-
-        .btn-outline-light:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: linear-gradient(135deg, #4361ee, #7209b7, #f72585);
-        }
-
-        #hero-canvas {
+        
+        .hero-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 0;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .logo-container {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 4rem;
-            height: 4rem;
-            background-color: #000;
-            border-radius: 50%;
-            margin-bottom: 1.5rem;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .logo {
-            color: white;
-            font-size: 1.75rem;
-            font-weight: bold;
-        }
-
-        .hero h1 {
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2.5rem;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #ffd700, #ff8c00);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 3rem;
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2.5rem;
-            height: 2.5rem;
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-        }
-
-        .scroll-indicator i {
-            color: var(--light);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 6rem 0;
-            background: linear-gradient(to bottom, #000, #111827);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background-color: #1f2937;
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            transition: var(--transition);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .feature-icon {
-            width: 4rem;
-            height: 4rem;
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .feature-card[data-color="blue"] .feature-icon {
-            background: linear-gradient(135deg, #4361ee, #3a56d4);
-            color: var(--light);
-        }
-
-        .feature-card[data-color="green"] .feature-icon {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: var(--light);
-        }
-
-        .feature-card[data-color="purple"] .feature-icon {
-            background: linear-gradient(135deg, #8b5cf6, #7209b7);
-            color: var(--light);
-        }
-
-        .feature-card[data-color="yellow"] .feature-icon {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: var(--light);
-        }
-
-        .feature-card[data-color="red"] .feature-icon {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: var(--light);
-        }
-
-        .feature-card[data-color="orange"] .feature-icon {
-            background: linear-gradient(135deg, #f97316, #ea580c);
-            color: var(--light);
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .feature-card p {
-            color: var(--gray-light);
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .feature-link {
-            color: var(--gray-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .feature-link:hover {
-            color: var(--primary);
-        }
-
-        .feature-link i {
-            transition: transform 0.3s ease;
-        }
-
-        .feature-link:hover i {
-            transform: translateX(4px);
-        }
-
-        /* Dashboard Preview */
-        .dashboard-preview {
-            padding: 6rem 0;
-            background: linear-gradient(to bottom, #111827, #000);
-        }
-
-        .dashboard-tabs {
-            background-color: #1f2937;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid #374151;
-        }
-
-        .tabs-header {
-            display: flex;
-            background-color: #111827;
-            padding: 0.5rem;
-            border-bottom: 1px solid #374151;
-        }
-
-        .tab-btn {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: none;
-            color: var(--gray-light);
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: var(--radius);
-            transition: var(--transition);
-        }
-
-        .tab-btn.active {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        .tabs-content {
-            padding: 1.5rem;
-        }
-
-        .tab-pane {
-            display: none;
-        }
-
-        .tab-pane.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .dashboard-card {
-            background-color: #111827;
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            height: 100%;
-        }
-
-        .dashboard-card.wide {
-            grid-column: span 1;
-        }
-
-        .dashboard-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .metrics-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        .metric {
-            background-color: #1f2937;
-            padding: 1rem;
-            border-radius: var(--radius);
-        }
-
-        .metric-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--gray-light);
-            font-size: 0.875rem;
-        }
-
-        .metric-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-value span {
-            font-size: 0.875rem;
-            font-weight: 400;
-            color: var(--gray-light);
-        }
-
-        .progress-bar {
-            height: 4px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background-color: var(--primary);
-            border-radius: var(--radius-full);
-        }
-
-        .workout-today {
-            margin-top: 1.5rem;
-        }
-
-        .workout-today h4 {
-            font-size: 1.125rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .workout-card {
-            background-color: #1f2937;
-            padding: 1rem;
-            border-radius: var(--radius);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .workout-card h5 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .workout-card p {
-            font-size: 0.875rem;
-            color: var(--gray-light);
-            margin-bottom: 0;
-        }
-
-        .chart-container {
-            height: 200px;
-            display: flex;
-            align-items: flex-end;
-            padding-top: 1rem;
-        }
-
-        .bar-chart {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            gap: 0.5rem;
-            align-items: flex-end;
-        }
-
+        
         .bar {
-            flex: 1;
-            background-color: rgba(67, 97, 238, 0.2);
-            border-radius: var(--radius-sm);
-            position: relative;
-            min-height: 20px;
             transition: height 1s ease;
         }
-
+        
         .bar::before {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: var(--primary);
-            border-radius: var(--radius-sm);
+            background-color: #6366f1;
+            border-radius: 0.25rem;
             height: 0;
-            animation: barFill 1s ease forwards;
+            animation: barFill 1.5s ease forwards;
         }
-
-        .bar span {
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.75rem;
-            color: var(--gray-light);
+        
+        @keyframes barFill {
+            from { height: 0; }
+            to { height: 100%; }
         }
-
-        /* App Showcase */
-        .app-showcase {
-            padding: 6rem 0;
-            background: linear-gradient(to bottom, #000, #111827);
-            overflow: hidden;
+        
+        .scroll-indicator {
+            animation: bounce 2s infinite;
         }
-
-        .app-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        @media (min-width: 768px) {
-            .app-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .app-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .app-text p {
-            font-size: 1.125rem;
-            color: var(--gray-light);
-            margin-bottom: 2rem;
-        }
-
-        .app-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .app-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background-color: var(--light);
-            color: var(--dark);
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--radius);
-            transition: var(--transition);
-        }
-
-        .app-btn:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: var(--dark);
-        }
-
-        .app-btn i {
-            font-size: 1.5rem;
-        }
-
-        .app-btn div {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .app-btn span {
-            font-size: 0.75rem;
-            line-height: 1;
-        }
-
-        .app-btn strong {
-            font-size: 1rem;
-            line-height: 1.2;
-        }
-
-        .app-phones {
-            position: relative;
-            height: 600px;
-        }
-
-        #phone-scene {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 6rem 0;
-            background: linear-gradient(to bottom, #111827, #000);
-        }
-
-        .billing-toggle {
-            display: flex;
-            justify-content: center;
-            background-color: #1f2937;
-            border-radius: var(--radius-full);
-            padding: 0.25rem;
-            width: fit-content;
-            margin: 0 auto 3rem;
-        }
-
-        .toggle-btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-full);
-            border: none;
-            background: transparent;
-            color: var(--gray-light);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .toggle-btn.active {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        .toggle-btn span {
-            font-size: 0.75rem;
-            opacity: 0.75;
-            margin-left: 0.25rem;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .pricing-card {
-            background-color: #1f2937;
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            position: relative;
-            transition: var(--transition);
-            border: 1px solid #374151;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .pricing-card.popular {
-            background: linear-gradient(to bottom, #1e3a8a, #1e40af);
-            border-color: #3b82f6;
-            transform: translateY(-10px);
-        }
-
-        .popular-tag {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--primary);
-            color: var(--light);
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-full);
-        }
-
-        .pricing-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .plan-description {
-            color: var(--gray-light);
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
-            min-height: 2.5rem;
-        }
-
-        .pricing-card.popular .plan-description {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .price {
-            margin-bottom: 1.5rem;
-        }
-
-        .amount {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .period {
-            font-size: 1rem;
-            color: var(--gray-light);
-        }
-
-        .pricing-card.popular .period {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .features-list {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .features-list li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            color: var(--gray-light);
-        }
-
-        .pricing-card.popular .features-list li {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .features-list i {
-            color: var(--success);
-        }
-
-        .pricing-card.popular .features-list i {
-            color: #38bdf8;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 6rem 0;
-            background: linear-gradient(to bottom, #000, #111827);
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .testimonial-container {
-            background-color: #1f2937;
-            border-radius: var(--radius-lg);
-            padding: 3rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonial {
-            display: none;
-        }
-
-        .testimonial.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .quote-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            opacity: 0.3;
-            margin-bottom: 1.5rem;
-        }
-
-        .testimonial-text {
-            font-size: 1.25rem;
-            font-style: italic;
-            margin-bottom: 2rem;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 3.5rem;
-            height: 3.5rem;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--primary);
-        }
-
-        .author-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .author-info h4 {
-            font-size: 1.125rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .author-info p {
-            font-size: 0.875rem;
-            color: var(--gray-light);
-            margin-bottom: 0;
-        }
-
-        .testimonial-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .testimonial-arrow {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            background-color: #1f2937;
-            border: none;
-            color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .testimonial-arrow:hover {
-            background-color: var(--primary);
-        }
-
-        .testimonial-dots {
-            display: flex;
-            gap: 0.5rem;
-            margin: 0 1rem;
-        }
-
-        .dot {
-            width: 0.75rem;
-            height: 0.75rem;
-            border-radius: 50%;
-            background-color: #374151;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .dot.active {
-            background-color: var(--primary);
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 6rem 0;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #000;
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .logo-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            background-color: var(--light);
-            color: var(--dark);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.125rem;
-        }
-
-        .footer-logo span {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .footer-col p {
-            color: var(--gray-light);
-            margin-bottom: 1.5rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            background-color: #1f2937;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--light);
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        .footer-col h3 {
-            font-size: 1.125rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-col ul li a {
-            color: var(--gray-light);
-            transition: var(--transition);
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--light);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #1f2937;
-        }
-
-        .footer-bottom p {
-            color: var(--gray-light);
-            font-size: 0.875rem;
-            margin-bottom: 0;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
+        
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) translateX(-50%);
+                transform: translateY(0);
             }
             40% {
-                transform: translateY(-10px) translateX(-50%);
+                transform: translateY(-10px);
             }
             60% {
-                transform: translateY(-5px) translateX(-50%);
+                transform: translateY(-5px);
             }
         }
-
-        @keyframes barFill {
-            from {
-                height: 0;
-            }
-            to {
-                height: 100%;
-            }
+        
+        /* Feature card hover animations */
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .cta-buttons, .app-buttons {
-                flex-direction: column;
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .metrics-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.1), 0 8px 10px -6px rgba(99, 102, 241, 0.1);
+        }
+        
+        .feature-icon {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+        
+        /* Tab animations */
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-pane {
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Testimonial animations */
+        .testimonial {
+            transition: opacity 0.5s ease;
         }
     </style>
 </head>
-<body>
+<body class="bg-[#0f172a] text-white">
     <div id="app">
         <!-- Hero Section with 3D Background -->
-        <section class="hero">
-            <canvas id="hero-canvas"></canvas>
-            <div class="hero-content">
-                <div class="logo-container">
-                    <div class="logo">APT</div>
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+            <canvas id="hero-canvas" class="hero-canvas"></canvas>
+            <div class="container mx-auto px-6 z-10 text-center max-w-4xl">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-black rounded-full mb-6 animate-float">
+                    <div class="text-white text-2xl font-bold">CS</div>
                 </div>
-                <h1>Transform Your <span class="gradient-text">Fitness</span> Journey</h1>
-                <p>Track workouts, nutrition, and progress with our AI-powered platform. Achieve your fitness goals faster than ever before.</p>
-                <div class="cta-buttons">
-                    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
-                    <a href="{% url 'register' %}" class="btn btn-outline">Sign Up</a>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-up">Can AI Understand You? Welcome to the Future of Human-Like Intelligence</h1>  
+                <p class="text-xl text-white/90 mb-10 animate-fade-in-up opacity-0" style="animation-delay: 0.2s">Experience the power of AI that understands thought, memory, and emotion. Dive into cognitive modeling to explore how machines can mimic human behavior. Interact with intelligent systems tailored to your unique personality and responses.</p>
+                <div class="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in-up opacity-0" style="animation-delay: 0.4s">
+                    <a href="{% url 'login' %}" class="px-8 py-3 bg-white text-[#0f172a] font-semibold rounded-full hover:bg-white/90 transition-all">Login</a>
+                    <a href="{% url 'register' %}" class="px-8 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-all">Sign Up</a>
                 </div>
-                <div class="scroll-indicator">
-                    <i class="fas fa-arrow-down"></i>
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer scroll-indicator">
+                    <i class="fas fa-arrow-down text-white"></i>
                 </div>
             </div>
         </section>
 
         <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Everything You Need For Your Fitness Journey</h2>
-                    <p>Our platform combines cutting-edge technology with proven fitness methodologies to deliver results.</p>
+        <section class="py-24 bg-gradient-to-b from-[#000] to-[#111827]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Everything You Need to Explore Human-Like AI</h2>
+                    <p class="text-gray-light text-lg">Our platform blends advanced cognitive modeling with real-world psychology and AI innovation—designed to help you understand, simulate, and interact with human-like intelligence.</p>
                 </div>
-                <div class="features-grid">
-                    <div class="feature-card" data-color="blue">
-                        <div class="feature-icon">
-                            <i class="fas fa-dumbbell"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="feature-card bg-[#1f2937] rounded-2xl p-8 h-full flex flex-col">
+                        <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6 text-2xl bg-gradient-to-br from-blue-500 to-blue-700 text-white">
+                            <i class="fas fa-brain"></i>
                         </div>
-                        <h3>Workout Tracking</h3>
-                        <p>Log and track your workouts with detailed analytics and progress tracking.</p>
-                        <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <h3 class="text-xl font-bold mb-3">Cognitive Simulations</h3>
+                        <p class="text-gray-light mb-6 flex-grow">Explore AI models that simulate human memory, perception, and decision-making to better understand behavior.</p>
+                        <a href="#" class="text-gray-light flex items-center gap-2 text-sm font-medium hover:text-primary transition-all group">
+                            Learn more 
+                            <i class="fas fa-arrow-right transition-all group-hover:translate-x-1"></i>
+                        </a>
                     </div>
-                    <div class="feature-card" data-color="green">
-                        <div class="feature-icon">
-                            <i class="fas fa-utensils"></i>
+                    
+                    <div class="feature-card bg-[#1f2937] rounded-2xl p-8 h-full flex flex-col">
+                        <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6 text-2xl bg-gradient-to-br from-green-500 to-green-700 text-white">
+                            <i class="fas fa-user-circle"></i>
                         </div>
-                        <h3>Nutrition Planning</h3>
-                        <p>Track your meals, macros, and calories with our intuitive nutrition dashboard.</p>
-                        <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <h3 class="text-xl font-bold mb-3">Personality Profiling</h3>
+                        <p class="text-gray-light mb-6 flex-grow">Analyze user behavior and dialogue to identify personality traits and adapt AI interactions accordingly.</p>
+                        <a href="#" class="text-gray-light flex items-center gap-2 text-sm font-medium hover:text-primary transition-all group">
+                            Learn more 
+                            <i class="fas fa-arrow-right transition-all group-hover:translate-x-1"></i>
+                        </a>
                     </div>
-                    <div class="feature-card" data-color="purple">
-                        <div class="feature-icon">
+                    
+                    <div class="feature-card bg-[#1f2937] rounded-2xl p-8 h-full flex flex-col">
+                        <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6 text-2xl bg-gradient-to-br from-purple-500 to-purple-700 text-white">
                             <i class="fas fa-chart-line"></i>
                         </div>
-                        <h3>Progress Analytics</h3>
-                        <p>Visualize your progress with detailed charts and insights.</p>
-                        <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <h3 class="text-xl font-bold mb-3">Behavior Analytics</h3>
+                        <p class="text-gray-light mb-6 flex-grow">Track and visualize cognitive responses and emotional shifts through real-time interaction data.</p>
+                        <a href="#" class="text-gray-light flex items-center gap-2 text-sm font-medium hover:text-primary transition-all group">
+                            Learn more 
+                            <i class="fas fa-arrow-right transition-all group-hover:translate-x-1"></i>
+                        </a>
                     </div>
-                    <div class="feature-card" data-color="yellow">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
+                    
+                    <div class="feature-card bg-[#1f2937] rounded-2xl p-8 h-full flex flex-col">
+                        <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6 text-2xl bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
+                            <i class="fas fa-comments"></i>
                         </div>
-                        <h3>AI Coaching</h3>
-                        <p>Get personalized workout and nutrition recommendations from our AI coach.</p>
-                        <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <h3 class="text-xl font-bold mb-3">AI Conversational Agents</h3>
+                        <p class="text-gray-light mb-6 flex-grow">Engage with AI personas designed to mimic human thought processes and adjust their behavior to your input.</p>
+                        <a href="#" class="text-gray-light flex items-center gap-2 text-sm font-medium hover:text-primary transition-all group">
+                            Learn more 
+                            <i class="fas fa-arrow-right transition-all group-hover:translate-x-1"></i>
+                        </a>
                     </div>
-                    <div class="feature-card" data-color="red">
-                        <div class="feature-icon">
-                            <i class="fas fa-heart"></i>
+                    
+                    <div class="feature-card bg-[#1f2937] rounded-2xl p-8 h-full flex flex-col">
+                        <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6 text-2xl bg-gradient-to-br from-red-500 to-red-700 text-white">
+                            <i class="fas fa-heartbeat"></i>
                         </div>
-                        <h3>Health Monitoring</h3>
-                        <p>Track your heart rate, sleep, and other health metrics in one place.</p>
-                        <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <h3 class="text-xl font-bold mb-3">Cognitive Health Insights</h3>
+                        <p class="text-gray-light mb-6 flex-grow">Use AI to monitor mental well-being through speech patterns, emotional tone, and interaction history.</p>
+                        <a href="#" class="text-gray-light flex items-center gap-2 text-sm font-medium hover:text-primary transition-all group">
+                            Learn more 
+                            <i class="fas fa-arrow-right transition-all group-hover:translate-x-1"></i>
+                        </a>
                     </div>
-                    <div class="feature-card" data-color="orange">
-                        <div class="feature-icon">
-                            <i class="fas fa-award"></i>
+                    
+                    <div class="feature-card bg-[#1f2937] rounded-2xl p-8 h-full flex flex-col">
+                        <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6 text-2xl bg-gradient-to-br from-orange-500 to-orange-700 text-white">
+                            <i class="fas fa-vr-cardboard"></i>
                         </div>
-                        <h3>Challenges & Rewards</h3>
-                        <p>Join challenges, earn rewards, and stay motivated on your fitness journey.</p>
-                        <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <h3 class="text-xl font-bold mb-3">Interactive Scenarios</h3>
+                        <p class="text-gray-light mb-6 flex-grow">Experience real-time adaptive simulations where AI learns from your reactions and choices.</p>
+                        <a href="#" class="text-gray-light flex items-center gap-2 text-sm font-medium hover:text-primary transition-all group">
+                            Learn more 
+                            <i class="fas fa-arrow-right transition-all group-hover:translate-x-1"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Dashboard Preview -->
-        <section class="dashboard-preview">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Your Fitness Dashboard</h2>
-                    <p>Everything you need to track your fitness journey in one place.</p>
+        <section class="py-24 bg-gradient-to-b from-[#111827] to-[#000]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Your Cognitive Dashboard</h2>
+                    <p class="text-gray-light text-lg">Everything you need to explore how AI understands and interacts with you.</p>
                 </div>
-                <div class="dashboard-tabs">
-                    <div class="tabs-header">
-                        <button class="tab-btn active" data-tab="overview">Overview</button>
-                        <button class="tab-btn" data-tab="nutrition">Nutrition</button>
-                        <button class="tab-btn" data-tab="workouts">Workouts</button>
-                        <button class="tab-btn" data-tab="progress">Progress</button>
+                
+                <div class="bg-[#1f2937] rounded-2xl overflow-hidden shadow-xl transform hover:scale-[1.01] transition-all">
+                    <div class="flex bg-[#111827] px-2 border-b border-[#374151]">
+                        <button class="tab-btn px-4 py-3 font-medium text-white bg-primary rounded-t-lg" data-tab="overview">Overview</button>
+                        <button class="tab-btn px-4 py-3 font-medium text-gray-light hover:text-white transition-all" data-tab="nutrition">Personality</button>
+                        <button class="tab-btn px-4 py-3 font-medium text-gray-light hover:text-white transition-all" data-tab="workouts">Interactions</button>
+                        <button class="tab-btn px-4 py-3 font-medium text-gray-light hover:text-white transition-all" data-tab="progress">Emotions</button>
                     </div>
-                    <div class="tabs-content">
-                        <div class="tab-pane active" id="overview">
-                            <div class="dashboard-grid">
-                                <div class="dashboard-card wide">
-                                    <h3>Today's Summary</h3>
-                                    <div class="metrics-grid">
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-fire"></i>
-                                                <span>Calories</span>
+                    
+                    <div class="p-6">
+                        <div class="tab-pane block" id="overview">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div class="lg:col-span-2">
+                                    <div class="bg-[#111827] rounded-lg p-6 mb-6">
+                                        <h3 class="text-xl font-bold mb-4">Today's Summary</h3>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-brain"></i>
+                                                    <span>Cognitive Score</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">85 <span class="text-sm font-normal text-gray-light">pts</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 85%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
                                             </div>
-                                            <p class="metric-value">1250 <span>kcal</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 75%"></div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-comment-dots"></i>
+                                                    <span>Conversations</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">12 <span class="text-sm font-normal text-gray-light">today</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 60%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-smile"></i>
+                                                    <span>Mood</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">Positive <span class="text-sm font-normal text-gray-light">trend</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 75%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-lightbulb"></i>
+                                                    <span>Insights</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">5 <span class="text-sm font-normal text-gray-light">new</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 62%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-running"></i>
-                                                <span>Protein</span>
-                                            </div>
-                                            <p class="metric-value">65g <span>/ 120g</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 54%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-apple-alt"></i>
-                                                <span>Carbs</span>
-                                            </div>
-                                            <p class="metric-value">40g <span>/ 200g</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 20%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-chart-bar"></i>
-                                                <span>Fat</span>
-                                            </div>
-                                            <p class="metric-value">30g <span>/ 65g</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 46%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="workout-today">
-                                        <h4>Today's Workout</h4>
-                                        <div class="workout-card">
+                                        
+                                        <h4 class="font-bold mt-6 mb-3">Cognitive Summary</h4>
+                                        <div class="bg-[#283548] p-4 rounded-lg flex justify-between items-center animate-pulse-slow">
                                             <div>
-                                                <h5>Upper Body Strength</h5>
-                                                <p>45 min · 6 exercises</p>
+                                                <h5 class="font-bold text-[15px]">Personality Analysis</h5>
+                                                <p class="text-sm text-gray-light">Explore your AI-generated personality insights</p>
                                             </div>
-                                            <button class="btn btn-sm">Start</button>
+                                            <button class="px-4 py-2 text-sm bg-primary hover:bg-primary-dark text-white rounded-lg transition-all">View</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="dashboard-card">
-                                    <h3>Weekly Progress</h3>
-                                    <div class="chart-container">
-                                        <div class="bar-chart">
-                                            <div class="bar" style="height: 40%"><span>M</span></div>
-                                            <div class="bar" style="height: 65%"><span>T</span></div>
-                                            <div class="bar" style="height: 35%"><span>W</span></div>
-                                            <div class="bar" style="height: 85%"><span>T</span></div>
-                                            <div class="bar" style="height: 55%"><span>F</span></div>
-                                            <div class="bar" style="height: 60%"><span>S</span></div>
-                                            <div class="bar" style="height: 70%"><span>S</span></div>
+                                
+                                <div>
+                                    <div class="bg-[#111827] rounded-lg p-6 h-full">
+                                        <h3 class="text-xl font-bold mb-4">Weekly Interaction</h3>
+                                        <div class="h-[200px] flex items-end mt-4">
+                                            <div class="flex gap-2 w-full h-full">
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 40%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">M</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 65%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">T</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 35%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">W</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 85%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">T</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 55%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">F</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 60%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">S</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 70%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">S</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane hidden" id="nutrition">
+                            <!-- Personality content -->
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div class="lg:col-span-2">
+                                    <div class="bg-[#111827] rounded-lg p-6">
+                                        <h3 class="text-xl font-bold mb-4">Personality Insights</h3>
+                                        <!-- Personality metrics -->
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-users"></i>
+                                                    <span>Extraversion</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">65% <span class="text-sm font-normal text-gray-light">score</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 65%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-heart"></i>
+                                                    <span>Agreeableness</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">82% <span class="text-sm font-normal text-gray-light">score</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 82%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Conscientiousness</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">78% <span class="text-sm font-normal text-gray-light">score</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 78%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg">
+                                                <div class="flex items-center gap-2 text-gray-light text-sm mb-1">
+                                                    <i class="fas fa-bolt"></i>
+                                                    <span>Openness</span>
+                                                </div>
+                                                <p class="text-xl font-bold mb-1">90% <span class="text-sm font-normal text-gray-light">score</span></p>
+                                                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="bg-primary h-full rounded-full" style="width: 90%; animation: grow 1.5s ease-out;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <h4 class="font-bold mt-6 mb-3">My Personality</h4>
+                                        <div class="bg-[#283548] p-4 rounded-lg flex justify-between items-center mb-4">
+                                            <div>
+                                                <h5 class="font-bold text-[15px]">Key Personality Traits</h5>
+                                                <p class="text-sm text-gray-light">Creative • Analytical • Empathetic</p>
+                                            </div>
+                                            <button class="px-4 py-2 text-sm bg-primary hover:bg-primary-dark text-white rounded-lg transition-all">Details</button>
+                                        </div>
+                                        
+                                        <div class="bg-[#283548] p-4 rounded-lg flex justify-between items-center">
+                                            <div>
+                                                <h5 class="font-bold text-[15px]">Personalized Recommendations</h5>
+                                                <p class="text-sm text-gray-light">Based on your cognitive profile</p>
+                                            </div>
+                                            <button class="px-4 py-2 text-sm bg-primary hover:bg-primary-dark text-white rounded-lg transition-all">View</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="bg-[#111827] rounded-lg p-6 h-full">
+                                        <h3 class="text-xl font-bold mb-4">Communication Style</h3>
+                                        <div class="text-center">
+                                            <i class="fas fa-comment-alt text-[#8b5cf6] text-5xl mb-4"></i>
+                                            <h4 class="text-lg font-bold mb-4">Articulate Explorer</h4>
+                                            <div class="h-1 bg-white/10 rounded-full overflow-hidden mb-6">
+                                                <div class="bg-secondary h-full rounded-full" style="width: 85%; animation: grow 1.5s ease-out;"></div>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] rounded-lg p-4 mb-4 text-left">
+                                                <p class="text-sm text-gray-light mb-2"><span class="font-semibold text-white">Key Strengths:</span> Creative thinking, empathetic listening, abstract reasoning</p>
+                                                <p class="text-sm text-gray-light"><span class="font-semibold text-white">Potential Growth Areas:</span> Decision-making, routine tasks, direct confrontation</p>
+                                            </div>
+                                            
+                                            <button class="w-full py-2 px-4 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-all">
+                                                View Full Profile
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="nutrition">
-                            <div class="dashboard-grid">
-                                <div class="dashboard-card wide">
-                                    <h3>Nutrition Summary</h3>
-                                    <div class="metrics-grid">
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-fire"></i>
-                                                <span>Daily Goal</span>
-                                            </div>
-                                            <p class="metric-value">2100 <span>kcal</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 60%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-drumstick-bite"></i>
-                                                <span>Protein</span>
-                                            </div>
-                                            <p class="metric-value">105g <span>/ 140g</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 75%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-bread-slice"></i>
-                                                <span>Carbs</span>
-                                            </div>
-                                            <p class="metric-value">180g <span>/ 230g</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 78%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="metric">
-                                            <div class="metric-header">
-                                                <i class="fas fa-cheese"></i>
-                                                <span>Fat</span>
-                                            </div>
-                                            <p class="metric-value">45g <span>/ 65g</span></p>
-                                            <div class="progress-bar">
-                                                <div class="progress" style="width: 69%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="workout-today">
-                                        <h4>Today's Meals</h4>
-                                        <div class="workout-card" style="margin-bottom: 10px;">
+                        
+                        <div class="tab-pane hidden" id="workouts">
+                            <!-- Interactions content -->
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div class="lg:col-span-2">
+                                    <div class="bg-[#111827] rounded-lg p-6">
+                                        <h3 class="text-xl font-bold mb-4">Interaction History</h3>
+                                        
+                                        <div class="bg-[#283548] p-4 rounded-lg flex justify-between items-center mb-4 hover:bg-[#303f56] transition-all cursor-pointer">
                                             <div>
-                                                <h5>Breakfast</h5>
-                                                <p>Protein oatmeal • 420 kcal</p>
+                                                <h5 class="font-bold text-[15px]">Conversation with Cognitive Assistant</h5>
+                                                <p class="text-sm text-gray-light">Today • 10:45 AM • 15 minutes</p>
                                             </div>
-                                            <button class="btn btn-sm">Log</button>
+                                            <button class="px-4 py-2 text-sm bg-primary hover:bg-primary-dark text-white rounded-lg transition-all">View</button>
                                         </div>
-                                        <div class="workout-card" style="margin-bottom: 10px;">
+                                        
+                                        <div class="bg-[#283548] p-4 rounded-lg flex justify-between items-center mb-4 hover:bg-[#303f56] transition-all cursor-pointer">
                                             <div>
-                                                <h5>Lunch</h5>
-                                                <p>Chicken salad • 590 kcal</p>
+                                                <h5 class="font-bold text-[15px]">Problem-Solving Simulation</h5>
+                                                <p class="text-sm text-gray-light">Yesterday • 3:30 PM • 25 minutes</p>
                                             </div>
-                                            <button class="btn btn-sm">Log</button>
+                                            <button class="px-4 py-2 text-sm bg-primary hover:bg-primary-dark text-white rounded-lg transition-all">View</button>
                                         </div>
-                                        <div class="workout-card">
+                                        
+                                        <div class="bg-[#283548] p-4 rounded-lg flex justify-between items-center mb-4 hover:bg-[#303f56] transition-all cursor-pointer">
                                             <div>
-                                                <h5>Dinner</h5>
-                                                <p>Salmon with veggies • 640 kcal</p>
+                                                <h5 class="font-bold text-[15px]">Creative Writing Assistant</h5>
+                                                <p class="text-sm text-gray-light">Apr 22, 2025 • 7:15 PM • 40 minutes</p>
                                             </div>
-                                            <button class="btn btn-sm">Log</button>
+                                            <button class="px-4 py-2 text-sm bg-primary hover:bg-primary-dark text-white rounded-lg transition-all">View</button>
+                                        </div>
+                                        
+                                        <div class="bg-[#283548] p-4 rounded-lg flex justify-between items-center mb-4 hover:bg-[#303f56] transition-all cursor-pointer">
+                                            <div>
+                                                <h5 class="font-bold text-[15px]">Decision-Making Analysis</h5>
+                                                <p class="text-sm text-gray-light">Apr 20, 2025 • 2:10 PM • 35 minutes</p>
+                                            </div>
+                                            <button class="px-4 py-2 text-sm bg-primary hover:bg-primary-dark text-white rounded-lg transition-all">View</button>
+                                        </div>
+                                        
+                                        <div class="mt-6 text-center">
+                                            <button class="px-4 py-2 text-sm bg-[#1f2937] hover:bg-[#2d3748] text-gray-light hover:text-white rounded-lg transition-all">
+                                                View All History
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="dashboard-card">
-                                    <h3>Water Intake</h3>
-                                    <div style="text-align: center; padding: 10px 0 20px;">
-                                        <i class="fas fa-tint" style="font-size: 2.5rem; color: #38bdf8;"></i>
-                                        <h4 style="margin: 10px 0;">1.2L / 2.5L</h4>
-                                        <div class="progress-bar" style="height: 10px; margin-bottom: 20px;">
-                                            <div class="progress" style="width: 48%; background-color: #38bdf8;"></div>
+                                
+                                <div>
+                                    <div class="bg-[#111827] rounded-lg p-6 mb-6">
+                                        <h3 class="text-xl font-bold mb-4">Interaction Stats</h3>
+                                        
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-gray-light">This week:</span>
+                                            <span class="font-medium">12 conversations</span>
                                         </div>
-                                        <button class="btn btn-sm" style="background-color: #38bdf8; color: white;">
-                                            <i class="fas fa-plus"></i> Add water
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="workouts">
-                            <div class="dashboard-grid">
-                                <div class="dashboard-card wide">
-                                    <h3>Workout Schedule</h3>
-                                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 20px;">
-                                        <div style="text-align: center; padding: 10px; background-color: #1f2937; border-radius: var(--radius); border-bottom: 3px solid var(--primary);">
-                                            <p style="margin: 0; font-size: 0.8rem; color: var(--gray-light);">Mon</p>
-                                            <p style="margin: 5px 0; font-weight: bold;">Chest</p>
+                                        <div class="h-1 bg-white/10 rounded-full overflow-hidden mb-6">
+                                            <div class="bg-primary h-full rounded-full" style="width: 80%; animation: grow 1.5s ease-out;"></div>
                                         </div>
-                                        <div style="text-align: center; padding: 10px; background-color: #1f2937; border-radius: var(--radius);">
-                                            <p style="margin: 0; font-size: 0.8rem; color: var(--gray-light);">Tue</p>
-                                            <p style="margin: 5px 0; font-weight: bold;">Back</p>
-                                        </div>
-                                        <div style="text-align: center; padding: 10px; background-color: #1f2937; border-radius: var(--radius);">
-                                            <p style="margin: 0; font-size: 0.8rem; color: var(--gray-light);">Wed</p>
-                                            <p style="margin: 5px 0; font-weight: bold;">Rest</p>
-                                        </div>
-                                        <div style="text-align: center; padding: 10px; background-color: #1f2937; border-radius: var(--radius);">
-                                            <p style="margin: 0; font-size: 0.8rem; color: var(--gray-light);">Thu</p>
-                                            <p style="margin: 5px 0; font-weight: bold;">Legs</p>
-                                        </div>
-                                        <div style="text-align: center; padding: 10px; background-color: #1f2937; border-radius: var(--radius);">
-                                            <p style="margin: 0; font-size: 0.8rem; color: var(--gray-light);">Fri</p>
-                                            <p style="margin: 5px 0; font-weight: bold;">Arms</p>
-                                        </div>
-                                        <div style="text-align: center; padding: 10px; background-color: #1f2937; border-radius: var(--radius);">
-                                            <p style="margin: 0; font-size: 0.8rem; color: var(--gray-light);">Sat</p>
-                                            <p style="margin: 5px 0; font-weight: bold;">HIIT</p>
-                                        </div>
-                                        <div style="text-align: center; padding: 10px; background-color: #1f2937; border-radius: var(--radius);">
-                                            <p style="margin: 0; font-size: 0.8rem; color: var(--gray-light);">Sun</p>
-                                            <p style="margin: 5px 0; font-weight: bold;">Rest</p>
+                                        
+                                        <div class="text-center p-6 bg-[#1f2937] rounded-lg">
+                                            <i class="fas fa-sync-alt text-primary text-3xl mb-3"></i>
+                                            <h4 class="font-medium text-gray-light mb-2">AI adaptation level</h4>
+                                            <p class="text-3xl font-bold">Level 4</p>
+                                            <div class="mt-4 text-xs text-gray-light">
+                                                AI has adapted to 78% of your communication patterns
+                                            </div>
                                         </div>
                                     </div>
                                     
-                                    <h4>Workout Details</h4>
-                                    <div style="margin-top: 15px;">
-                                        <div class="workout-card" style="margin-bottom: 10px; background-color: #283548;">
-                                            <div>
-                                                <h5>Bench Press</h5>
-                                                <p>4 sets • 8-10 reps • 160 lbs</p>
+                                    <div class="bg-[#111827] rounded-lg p-6">
+                                        <h3 class="text-xl font-bold mb-4">Suggested Activities</h3>
+                                        
+                                        <div class="bg-[#1f2937] p-3 rounded-lg mb-3 hover:bg-[#283548] cursor-pointer transition-all">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-lg bg-purple-600/20 flex items-center justify-center">
+                                                    <i class="fas fa-brain text-purple-500"></i>
+                                                </div>
+                                                <span>Cognitive Reasoning Test</span>
                                             </div>
-                                            <span style="color: var(--success);"><i class="fas fa-check-circle"></i></span>
                                         </div>
-                                        <div class="workout-card" style="margin-bottom: 10px; background-color: #283548;">
-                                            <div>
-                                                <h5>Incline Dumbbell Press</h5>
-                                                <p>3 sets • 10-12 reps • 65 lbs</p>
+                                        
+                                        <div class="bg-[#1f2937] p-3 rounded-lg mb-3 hover:bg-[#283548] cursor-pointer transition-all">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-lg bg-blue-600/20 flex items-center justify-center">
+                                                    <i class="fas fa-comments text-blue-500"></i>
+                                                </div>
+                                                <span>Dialogue Simulation</span>
                                             </div>
-                                            <span style="color: var(--success);"><i class="fas fa-check-circle"></i></span>
                                         </div>
-                                        <div class="workout-card">
-                                            <div>
-                                                <h5>Cable Flyes</h5>
-                                                <p>3 sets • 12-15 reps • 40 lbs</p>
+                                        
+                                        <div class="bg-[#1f2937] p-3 rounded-lg hover:bg-[#283548] cursor-pointer transition-all">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-lg bg-pink-600/20 flex items-center justify-center">
+                                                    <i class="fas fa-lightbulb text-pink-500"></i>
+                                                </div>
+                                                <span>Creative Problem Solving</span>
                                             </div>
-                                            <button class="btn btn-sm">Start</button>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="dashboard-card">
-                                    <h3>Workout Stats</h3>
-                                    <div style="margin-bottom: 15px;">
-                                        <p style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                            <span>This week:</span>
-                                            <span>4 / 5 workouts</span>
-                                        </p>
-                                        <div class="progress-bar">
-                                            <div class="progress" style="width: 80%;"></div>
-                                        </div>
-                                    </div>
-                                    <div style="text-align: center; padding: 15px; background-color: #1f2937; border-radius: var(--radius);">
-                                        <i class="fas fa-fire-alt" style="font-size: 1.5rem; color: #ef4444;"></i>
-                                        <h4 style="margin: 5px 0;">Current streak</h4>
-                                        <p style="font-size: 2rem; font-weight: bold; margin: 5px 0;">16 days</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="progress">
-                            <div class="dashboard-grid">
-                                <div class="dashboard-card wide">
-                                    <h3>Body Metrics</h3>
-                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
-                                        <div style="background-color: #1f2937; padding: 15px; border-radius: var(--radius); text-align: center;">
-                                            <p style="margin: 0; color: var(--gray-light);">Weight</p>
-                                            <h4 style="margin: 5px 0; font-size: 1.5rem;">175 lbs</h4>
-                                            <p style="margin: 0; color: var(--success); font-size: 0.8rem;">
-                                                <i class="fas fa-arrow-down"></i> 2.5 lbs this month
-                                            </p>
-                        </div>
-                                        <div style="background-color: #1f2937; padding: 15px; border-radius: var(--radius); text-align: center;">
-                                            <p style="margin: 0; color: var(--gray-light);">Body Fat</p>
-                                            <h4 style="margin: 5px 0; font-size: 1.5rem;">16.8%</h4>
-                                            <p style="margin: 0; color: var(--success); font-size: 0.8rem;">
-                                                <i class="fas fa-arrow-down"></i> 1.2% this month
-                                            </p>
+                        
+                        <div class="tab-pane hidden" id="progress">
+                            <!-- Emotions content -->
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div class="lg:col-span-2">
+                                    <div class="bg-[#111827] rounded-lg p-6">
+                                        <h3 class="text-xl font-bold mb-4">Emotional Patterns</h3>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                            <div class="bg-[#1f2937] p-4 rounded-lg text-center">
+                                                <p class="text-gray-light mb-1">Joy</p>
+                                                <h4 class="text-2xl font-bold mb-1">68%</h4>
+                                                <p class="text-green-500 text-xs font-medium">
+                                                    <i class="fas fa-arrow-up"></i> 12% this week
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg text-center">
+                                                <p class="text-gray-light mb-1">Curiosity</p>
+                                                <h4 class="text-2xl font-bold mb-1">92%</h4>
+                                                <p class="text-green-500 text-xs font-medium">
+                                                    <i class="fas fa-arrow-up"></i> 5% this week
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="bg-[#1f2937] p-4 rounded-lg text-center">
+                                                <p class="text-gray-light mb-1">Stress</p>
+                                                <h4 class="text-2xl font-bold mb-1">23%</h4>
+                                                <p class="text-green-500 text-xs font-medium">
+                                                    <i class="fas fa-arrow-down"></i> 15% this week
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div style="background-color: #1f2937; padding: 15px; border-radius: var(--radius); text-align: center;">
-                                            <p style="margin: 0; color: var(--gray-light);">Muscle Mass</p>
-                                            <h4 style="margin: 5px 0; font-size: 1.5rem;">142 lbs</h4>
-                                            <p style="margin: 0; color: var(--primary); font-size: 0.8rem;">
-                                                <i class="fas fa-arrow-up"></i> 1.5 lbs this month
-                                            </p>
+                                        
+                                        <h4 class="font-bold mb-3">Emotional Trend</h4>
+                                        <div class="h-[200px] flex items-end mt-4">
+                                            <div class="flex gap-2 w-full h-full">
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 60%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">Jan</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 65%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">Feb</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 58%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">Mar</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 70%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">Apr</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 75%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">May</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-primary/20 rounded-sm relative min-h-[20px]" style="height: 80%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">Jun</span>
+                                                </div>
+                                                <div class="bar flex-1 bg-accent/20 rounded-sm relative min-h-[20px]" style="height: 85%">
+                                                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-light">Jul</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    
-                                    <h4>Weight Trend</h4>
-                                    <div class="chart-container" style="height: 180px; margin-top: 15px;">
-                                        <div class="bar-chart">
-                                            <div class="bar" style="height: 60%"><span>Jan</span></div>
-                                            <div class="bar" style="height: 65%"><span>Feb</span></div>
-                                            <div class="bar" style="height: 58%"><span>Mar</span></div>
-                                            <div class="bar" style="height: 55%"><span>Apr</span></div>
-                                            <div class="bar" style="height: 50%"><span>May</span></div>
-                                            <div class="bar" style="height: 45%"><span>Jun</span></div>
-                                            <div class="bar" style="height: 43%"><span>Jul</span></div>
+                                        
+                                        <div class="mt-10 text-center text-gray-light text-sm">
+                                            <p>Your emotional positivity has increased by 25% over the past 3 months</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="dashboard-card">
-                                    <h3>Performance</h3>
-                                    <div style="margin-bottom: 20px;">
-                                        <p style="margin-bottom: 5px;">Bench Press (1RM)</p>
-                                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                                            <span>210 lbs</span>
-                                            <span style="color: var(--primary);"><i class="fas fa-arrow-up"></i> 15 lbs</span>
+                                
+                                <div>
+                                    <div class="bg-[#111827] rounded-lg p-6 mb-6">
+                                        <h3 class="text-xl font-bold mb-4">Emotional Intelligence</h3>
+                                        
+                                        <div class="mb-4">
+                                            <div class="flex justify-between mb-1">
+                                                <span>Self-Awareness</span>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-bold">82%</span>
+                                                    <span class="text-primary text-xs"><i class="fas fa-arrow-up"></i> 8%</span>
+                                                </div>
+                                            </div>
+                                            <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                <div class="bg-primary h-full rounded-full" style="width: 82%; animation: grow 1.5s ease-out;"></div>
+                                            </div>
                                         </div>
-                                        <div class="progress-bar">
-                                            <div class="progress" style="width: 70%;"></div>
+                                        
+                                        <div class="mb-4">
+                                            <div class="flex justify-between mb-1">
+                                                <span>Social Awareness</span>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-bold">75%</span>
+                                                    <span class="text-primary text-xs"><i class="fas fa-arrow-up"></i> 12%</span>
+                                                </div>
+                                            </div>
+                                            <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                <div class="bg-primary h-full rounded-full" style="width: 75%; animation: grow 1.5s ease-out;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <div class="flex justify-between mb-1">
+                                                <span>Self-Regulation</span>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-bold">68%</span>
+                                                    <span class="text-primary text-xs"><i class="fas fa-arrow-up"></i> 5%</span>
+                                                </div>
+                                            </div>
+                                            <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                <div class="bg-primary h-full rounded-full" style="width: 68%; animation: grow 1.5s ease-out;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <div class="flex justify-between mb-1">
+                                                <span>Empathy</span>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-bold">88%</span>
+                                                    <span class="text-primary text-xs"><i class="fas fa-arrow-up"></i> 10%</span>
+                                                </div>
+                                            </div>
+                                            <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                <div class="bg-primary h-full rounded-full" style="width: 88%; animation: grow 1.5s ease-out;"></div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div style="margin-bottom: 20px;">
-                                        <p style="margin-bottom: 5px;">Squat (1RM)</p>
-                                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                                            <span>285 lbs</span>
-                                            <span style="color: var(--primary);"><i class="fas fa-arrow-up"></i> 25 lbs</span>
+                                    
+                                    <div class="bg-[#111827] rounded-lg p-6">
+                                        <h3 class="text-xl font-bold mb-4">Emotion Recognition</h3>
+                                        
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <div class="px-3 py-1 bg-[#1f2937] rounded-full text-sm text-gray-light">
+                                                Joy <span class="text-green-400 ml-1">95%</span>
+                                            </div>
+                                            <div class="px-3 py-1 bg-[#1f2937] rounded-full text-sm text-gray-light">
+                                                Sadness <span class="text-green-400 ml-1">87%</span>
+                                            </div>
+                                            <div class="px-3 py-1 bg-[#1f2937] rounded-full text-sm text-gray-light">
+                                                Anger <span class="text-yellow-400 ml-1">72%</span>
+                                            </div>
+                                            <div class="px-3 py-1 bg-[#1f2937] rounded-full text-sm text-gray-light">
+                                                Fear <span class="text-green-400 ml-1">83%</span>
+                                            </div>
+                                            <div class="px-3 py-1 bg-[#1f2937] rounded-full text-sm text-gray-light">
+                                                Surprise <span class="text-green-400 ml-1">91%</span>
+                                            </div>
                                         </div>
-                                        <div class="progress-bar">
-                                            <div class="progress" style="width: 65%;"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p style="margin-bottom: 5px;">Deadlift (1RM)</p>
-                                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                                            <span>315 lbs</span>
-                                            <span style="color: var(--primary);"><i class="fas fa-arrow-up"></i> 30 lbs</span>
-                                        </div>
-                                        <div class="progress-bar">
-                                            <div class="progress" style="width: 75%;"></div>
+                                        
+                                        <div class="text-center py-3">
+                                            <button class="px-4 py-2 text-sm bg-secondary hover:bg-secondary/90 text-white rounded-lg transition-all">
+                                                Run Emotion Test
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1534,236 +730,351 @@
         </section>
 
         <!-- 3D Mobile App Showcase -->
-        <section class="app-showcase">
-            <div class="container">
-                <div class="app-content">
-                    <div class="app-text">
-                        <h2>Take Your Fitness Journey Anywhere</h2>
-                        <p>Our mobile app gives you access to your workouts, nutrition tracking, and progress analytics on the go. Never miss a workout or meal tracking again.</p>
-                        <div class="app-buttons">
-                            <a href="#" class="app-btn">
-                                <i class="fab fa-apple"></i>
-                                <div>
-                                    <span>Download on the</span>
-                                    <strong>App Store</strong>
+        <section class="py-24 bg-gradient-to-b from-[#000] to-[#111827] overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="lg:order-2">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up">Experience Human-Like AI, Anywhere</h2>
+                        <p class="text-gray-light text-lg mb-8 animate-fade-in-up opacity-0" style="animation-delay: 0.2s">Our mobile app lets you interact with your personalized AI assistant on the go. Analyze your personality, simulate real-time conversations, and understand your behavior—anytime, anywhere.</p>
+                        <div class="flex flex-wrap gap-4 animate-fade-in-up opacity-0" style="animation-delay: 0.4s">
+                            <a href="#" class="flex items-center gap-3 bg-white text-dark px-5 py-3 rounded-lg transition-all hover:bg-white/90">
+                                <i class="fab fa-apple text-2xl"></i>
+                                <div class="flex flex-col">
+                                    <span class="text-xs">Download on the</span>
+                                    <strong class="text-base">App Store</strong>
                                 </div>
                             </a>
-                            <a href="#" class="app-btn">
-                                <i class="fab fa-google-play"></i>
-                                <div>
-                                    <span>GET IT ON</span>
-                                    <strong>Google Play</strong>
+                            <a href="#" class="flex items-center gap-3 bg-white text-dark px-5 py-3 rounded-lg transition-all hover:bg-white/90">
+                                <i class="fab fa-google-play text-2xl"></i>
+                                <div class="flex flex-col">
+                                    <span class="text-xs">GET IT ON</span>
+                                    <strong class="text-base">Google Play</strong>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="app-phones">
-                        <div id="phone-scene"></div>
+                    
+                    <div class="h-[600px] relative lg:order-1">
+                        <div id="phone-scene" class="w-full h-full"></div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Pricing Plans -->
-        <section class="pricing">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Choose Your Plan</h2>
-                    <p>Select the perfect plan for your fitness journey. All plans include a 14-day free trial.</p>
+        <section class="py-24 bg-gradient-to-b from-[#111827] to-[#000]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Choose Your AI Experience</h2>
+                    <p class="text-gray-light text-lg">Select the ideal plan for exploring human-like AI interactions. All plans include a 14-day free trial to experience cognitive simulations firsthand.</p>
                 </div>
-                <div class="billing-toggle">
-                    <button class="toggle-btn active" data-billing="monthly">Monthly</button>
-                    <button class="toggle-btn" data-billing="yearly">Yearly <span>Save 20%</span></button>
+                
+                <div class="inline-flex bg-[#1f2937] rounded-full p-1 mb-12 mx-auto">
+                    <button class="toggle-btn px-6 py-3 rounded-full font-medium bg-primary text-white" data-billing="monthly">Monthly</button>
+                    <button class="toggle-btn px-6 py-3 rounded-full font-medium text-gray-light" data-billing="yearly">
+                        Yearly <span class="text-xs opacity-75 ml-1">Save 20%</span>
+                    </button>
                 </div>
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3>Basic</h3>
-                        <p class="plan-description">Perfect for beginners starting their fitness journey</p>
-                        <div class="price">
-                            <span class="amount">$9.99</span>
-                            <span class="period">/ month</span>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Basic Plan -->
+                    <div class="bg-[#1f2937] border border-[#374151] rounded-2xl p-8 hover:-translate-y-2 transition-all duration-300">
+                        <h3 class="text-2xl font-bold mb-2">🧠 Basic</h3>
+                        <p class="text-gray-light text-sm mb-6 min-h-[40px]">Ideal for curious minds exploring AI-human interactions</p>
+                        
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold amount">$9.99</span>
+                            <span class="text-gray-light period">/ month</span>
                         </div>
-                        <ul class="features-list">
-                            <li><i class="fas fa-check"></i> Workout tracking</li>
-                            <li><i class="fas fa-check"></i> Basic nutrition tracking</li>
-                            <li><i class="fas fa-check"></i> Progress photos</li>
-                            <li><i class="fas fa-check"></i> 5 workout plans</li>
-                            <li><i class="fas fa-check"></i> Community access</li>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Simulated conversations based on basic personality traits</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Introductory behavior models</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Access to public cognitive analysis tools</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Community insights & discussions</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Email support</span>
+                            </li>
                         </ul>
-                        <button class="btn btn-outline-primary">Start Basic Plan</button>
+                        
+                        <button class="w-full py-3 px-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all">Start Basic Plan</button>
                     </div>
-                    <div class="pricing-card popular">
-                        <div class="popular-tag">Most Popular</div>
-                        <h3>Pro</h3>
-                        <p class="plan-description">For fitness enthusiasts who want to take it to the next level</p>
-                        <div class="price">
-                            <span class="amount">$19.99</span>
-                            <span class="period">/ month</span>
+                    
+                    <!-- Pro Plan -->
+                    <div class="bg-gradient-to-b from-[#1e3a8a] to-[#1e40af] border border-blue-500 rounded-2xl p-8 transform -translate-y-4 relative shadow-xl hover:-translate-y-6 transition-all duration-300">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-semibold py-1 px-3 rounded-full">Most Popular</div>
+                        <h3 class="text-2xl font-bold mb-2">🌟 Pro</h3>
+                        <p class="text-white/80 text-sm mb-6 min-h-[40px]">For enthusiasts and researchers wanting deeper insight into human cognition</p>
+                        
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold amount">$19.99</span>
+                            <span class="text-white/70 period">/ month</span>
                         </div>
-                        <ul class="features-list">
-                            <li><i class="fas fa-check"></i> Everything in Basic</li>
-                            <li><i class="fas fa-check"></i> Advanced nutrition tracking</li>
-                            <li><i class="fas fa-check"></i> Custom workout plans</li>
-                            <li><i class="fas fa-check"></i> Body metrics tracking</li>
-                            <li><i class="fas fa-check"></i> AI workout recommendations</li>
-                            <li><i class="fas fa-check"></i> Priority support</li>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-blue-300 mt-1"></i>
+                                <span class="text-white/80">Everything in Basic</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-blue-300 mt-1"></i>
+                                <span class="text-white/80">Personalized behavioral analysis</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-blue-300 mt-1"></i>
+                                <span class="text-white/80">Real-time interactive AI models</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-blue-300 mt-1"></i>
+                                <span class="text-white/80">Upload personality profiles (via questionnaire)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-blue-300 mt-1"></i>
+                                <span class="text-white/80">Beta access to upcoming features</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-blue-300 mt-1"></i>
+                                <span class="text-white/80">Priority support</span>
+                            </li>
                         </ul>
-                        <button class="btn btn-primary">Start Pro Plan</button>
+                        
+                        <button class="w-full py-3 px-4 bg-white text-[#1e3a8a] font-semibold rounded-lg hover:bg-white/90 transition-all">Start Pro Plan</button>
                     </div>
-                    <div class="pricing-card">
-                        <h3>Elite</h3>
-                        <p class="plan-description">The ultimate fitness experience for serious athletes</p>
-                        <div class="price">
-                            <span class="amount">$29.99</span>
-                            <span class="period">/ month</span>
+                    
+                    <!-- Elite Plan -->
+                    <div class="bg-[#1f2937] border border-[#374151] rounded-2xl p-8 hover:-translate-y-2 transition-all duration-300">
+                        <h3 class="text-2xl font-bold mb-2">🚀 Elite</h3>
+                        <p class="text-gray-light text-sm mb-6 min-h-[40px]">For professionals, developers, and psychologists pushing the frontiers of AI</p>
+                        
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold amount">$29.99</span>
+                            <span class="text-gray-light period">/ month</span>
                         </div>
-                        <ul class="features-list">
-                            <li><i class="fas fa-check"></i> Everything in Pro</li>
-                            <li><i class="fas fa-check"></i> 1-on-1 coaching sessions</li>
-                            <li><i class="fas fa-check"></i> Personalized meal plans</li>
-                            <li><i class="fas fa-check"></i> Advanced analytics</li>
-                            <li><i class="fas fa-check"></i> Exclusive content</li>
-                            <li><i class="fas fa-check"></i> Early access to new features</li>
-                            <li><i class="fas fa-check"></i> 24/7 priority support</li>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Everything in Pro</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">1-on-1 cognitive simulation sessions</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Advanced analytics dashboard</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">API access for custom model development</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">Research-focused datasets</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span class="text-gray-light">24/7 support with technical assistance</span>
+                            </li>
                         </ul>
-                        <button class="btn btn-outline-primary">Start Elite Plan</button>
+                        
+                        <button class="w-full py-3 px-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all">Start Elite Plan</button>
                     </div>
                 </div>
             </div>
         </section>
-
+    
         <!-- Testimonials -->
-        <section class="testimonials">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Success Stories</h2>
-                    <p>See how our platform has helped people transform their lives and achieve their fitness goals.</p>
+        <section class="py-24 bg-gradient-to-b from-[#000] to-[#111827]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Success Stories</h2>
+                    <p class="text-gray-light text-lg">See how our platform has helped people understand AI and improve human-machine interactions.</p>
                 </div>
-                <div class="testimonial-slider">
-                    <div class="testimonial-container">
+                
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-[#1f2937] rounded-2xl p-8 md:p-12 relative overflow-hidden">
+                        <!-- Testimonial Container -->
                         <div class="testimonial active">
-                            <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                            <p class="testimonial-text">"This app completely transformed my fitness journey. The personalized workout plans and nutrition tracking made it easy to stay on track. I've never felt better!"</p>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson">
+                            <div class="text-primary opacity-30 text-5xl mb-6">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="text-lg md:text-xl italic mb-8 leading-relaxed">"This platform completely transformed my understanding of AI. The cognitive simulations and personality analysis provided incredible insights into how machines can understand human behavior."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary">
+                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson" class="w-full h-full object-cover">
                                 </div>
-                                <div class="author-info">
-                                    <h4>Sarah Johnson</h4>
-                                    <p>Lost 30lbs in 6 months</p>
+                                <div>
+                                    <h4 class="font-bold text-lg">Sarah Johnson</h4>
+                                    <p class="text-gray-light">Cognitive Psychology Researcher</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="testimonial">
-                            <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                            <p class="testimonial-text">"As a serious runner, I needed something that could keep up with my training. This platform has everything I need to track my progress and optimize my nutrition for peak performance."</p>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+                        
+                        <div class="testimonial hidden">
+                            <div class="text-primary opacity-30 text-5xl mb-6">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="text-lg md:text-xl italic mb-8 leading-relaxed">"As a developer working on conversational AI, I needed tools to understand human response patterns. This platform has everything I need to create more natural and responsive AI systems."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="w-full h-full object-cover">
                                 </div>
-                                <div class="author-info">
-                                    <h4>Michael Chen</h4>
-                                    <p>Marathon Runner</p>
+                                <div>
+                                    <h4 class="font-bold text-lg">Michael Chen</h4>
+                                    <p class="text-gray-light">AI Software Engineer</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="testimonial">
-                            <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                            <p class="testimonial-text">"I've tried many fitness apps, but this one stands out with its intuitive interface and comprehensive features. The progress tracking keeps me motivated every day."</p>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily Rodriguez">
+                        
+                        <div class="testimonial hidden">
+                            <div class="text-primary opacity-30 text-5xl mb-6">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="text-lg md:text-xl italic mb-8 leading-relaxed">"I've tried many cognitive analysis tools, but this one stands out with its depth of understanding and adaptability. The emotional intelligence training has been invaluable for my research."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary">
+                                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily Rodriguez" class="w-full h-full object-cover">
                                 </div>
-                                <div class="author-info">
-                                    <h4>Emily Rodriguez</h4>
-                                    <p>Fitness Enthusiast</p>
+                                <div>
+                                    <h4 class="font-bold text-lg">Emily Rodriguez</h4>
+                                    <p class="text-gray-light">Behavioral Scientist</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-controls">
-                        <button class="testimonial-arrow prev"><i class="fas fa-chevron-left"></i></button>
-                        <div class="testimonial-dots">
-                            <span class="dot active"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
+                    
+                    <!-- Testimonial Controls -->
+                    <div class="flex items-center justify-center mt-8 gap-4">
+                        <button class="testimonial-arrow w-12 h-12 bg-[#1f2937] hover:bg-primary text-white rounded-full flex items-center justify-center transition-all prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="flex gap-2">
+                            <span class="dot w-3 h-3 rounded-full bg-primary cursor-pointer active"></span>
+                            <span class="dot w-3 h-3 rounded-full bg-[#374151] hover:bg-primary/60 cursor-pointer transition-all"></span>
+                            <span class="dot w-3 h-3 rounded-full bg-[#374151] hover:bg-primary/60 cursor-pointer transition-all"></span>
                         </div>
-                        <button class="testimonial-arrow next"><i class="fas fa-chevron-right"></i></button>
+                        <button class="testimonial-arrow w-12 h-12 bg-[#1f2937] hover:bg-primary text-white rounded-full flex items-center justify-center transition-all next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
-
+    
         <!-- CTA Section -->
-        <section class="cta">
-            <div class="container">
-                <h2>Ready to Transform Your Fitness Journey?</h2>
-                <p>Join thousands of users who have already transformed their lives with our platform.</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-light">Start Your Free Trial</button>
-                    <button class="btn btn-outline-light">View Demo</button>
+        <section class="py-24 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 drop-shadow-md">Ready to Explore the Future of Human-Like Intelligence?</h2>
+                <p class="text-xl text-white/90 max-w-2xl mx-auto mb-10">Join thousands of users already experiencing the next generation of AI-powered human behavior understanding.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="px-8 py-3 bg-white text-[#6366f1] font-semibold rounded-full hover:bg-white/90 transition-all shadow-xl hover:shadow-2xl">Start Your Free Trial</button>
+                    <button class="px-8 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-all">View Demo</button>
                 </div>
             </div>
         </section>
-
+    
         <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-col">
-                        <div class="footer-logo">
-                            <div class="logo-icon">fi</div>
-                            <span>Fitonist</span>
+        <footer class="bg-black pt-16 pb-8">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0f172a] font-bold">
+                                CS
+                            </div>
+                            <span class="text-xl font-bold">CogniSphere</span>
                         </div>
-                        <p>Transform your fitness journey with our all-in-one platform.</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        <p class="text-gray-light mb-6">Explore the future of AI-powered human understanding and cognitive modeling.</p>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-8 h-8 bg-[#1f2937] hover:bg-primary text-white rounded-full flex items-center justify-center transition-all">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 bg-[#1f2937] hover:bg-primary text-white rounded-full flex items-center justify-center transition-all">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 bg-[#1f2937] hover:bg-primary text-white rounded-full flex items-center justify-center transition-all">
+                                <i class="fab fa-instagram"></i>
+                            </a>
                         </div>
                     </div>
-                    <div class="footer-col">
-                        <h3>Features</h3>
-                        <ul>
-                            <li><a href="#">Workout Tracking</a></li>
-                            <li><a href="#">Nutrition Planning</a></li>
-                            <li><a href="#">Progress Analytics</a></li>
-                            <li><a href="#">AI Coaching</a></li>
-                            <li><a href="#">Community</a></li>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Features</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Behavior Simulation</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Personality-Based Interaction</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Emotion Recognition</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Adaptive AI Responses</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Cognitive Insights</a></li>
                         </ul>
                     </div>
-                    <div class="footer-col">
-                        <h3>Resources</h3>
-                        <ul>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Guides</a></li>
-                            <li><a href="#">Recipes</a></li>
-                            <li><a href="#">Workout Library</a></li>
-                            <li><a href="#">FAQ</a></li>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Resources</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Blog</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Case Studies</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Whitepapers</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Research Papers</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">FAQ</a></li>
                         </ul>
                     </div>
-                    <div class="footer-col">
-                        <h3>Company</h3>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Service</a></li>
-                            <li><a href="#">Contact</a></li>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Company</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">About Us</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Careers</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-light hover:text-white transition-all">Contact</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2025 Fitonist. All rights reserved.</p>
+                
+                <div class="pt-8 border-t border-[#1f2937] text-center">
+                    <p class="text-gray-light text-sm">&copy; 2025 CogniSphere. All rights reserved.</p>
                 </div>
             </div>
         </footer>
     </div>
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // Add this at the top of the script section
+        // Preload testimonial images
+        function preloadTestimonialImages() {
+            const imageUrls = [
+                'https://randomuser.me/api/portraits/women/44.jpg',
+                'https://randomuser.me/api/portraits/men/32.jpg',
+                'https://randomuser.me/api/portraits/women/68.jpg'
+            ];
+            
+            imageUrls.forEach(url => {
+                const img = new Image();
+                img.src = url;
+            });
+        }
+        
         // Wait for the DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Preload testimonial images
+            preloadTestimonialImages();
+            
             // Initialize Three.js Hero Scene
             initHeroScene();
             
@@ -1786,8 +1097,244 @@
                     behavior: 'smooth'
                 });
             });
+            
+            // Add animation class to elements when they become visible
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.feature-card, .dashboard-tabs, .pricing-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate-fade-in');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initial check
         });
-
+    
+        // Tab Switching functionality
+        function initTabs() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            // Check if the tab content exists but is hidden
+            const ensureTabsExist = () => {
+                // Verify the nutrition tab (Personality)
+                if (document.getElementById('nutrition') && 
+                    document.getElementById('nutrition').querySelectorAll('.grid').length === 0) {
+                    console.error("Personality tab content missing, rebuilding...");
+                    rebuildPersonalityTab();
+                }
+                
+                // Verify the workouts tab (Interactions)
+                if (document.getElementById('workouts') && 
+                    document.getElementById('workouts').querySelectorAll('.grid').length === 0) {
+                    console.error("Interactions tab content missing, rebuilding...");
+                    rebuildInteractionsTab();
+                }
+                
+                // Verify the progress tab (Emotions)
+                if (document.getElementById('progress') && 
+                    document.getElementById('progress').querySelectorAll('.grid').length === 0) {
+                    console.error("Emotions tab content missing, rebuilding...");
+                    rebuildEmotionsTab();
+                }
+            };
+            
+            // Run the check once on page load
+            ensureTabsExist();
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and panes
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('bg-primary', 'text-white');
+                        btn.classList.add('text-gray-light');
+                    });
+                    
+                    tabPanes.forEach(pane => {
+                        pane.classList.add('hidden');
+                    });
+                    
+                    // Add active class to clicked button
+                    button.classList.remove('text-gray-light');
+                    button.classList.add('bg-primary', 'text-white');
+                    
+                    // Show corresponding tab pane
+                    const tabId = button.getAttribute('data-tab');
+                    const tabPane = document.getElementById(tabId);
+                    
+                    if (tabPane) {
+                        tabPane.classList.remove('hidden');
+                        
+                        // Extra check to ensure content is visible
+                        if (tabPane.querySelectorAll('.grid').length === 0) {
+                            console.warn(`Tab ${tabId} appears to be missing content, attempting to rebuild...`);
+                            
+                            if (tabId === 'nutrition') {
+                                rebuildPersonalityTab();
+                            } else if (tabId === 'workouts') {
+                                rebuildInteractionsTab();
+                            } else if (tabId === 'progress') {
+                                rebuildEmotionsTab();
+                            }
+                        }
+                    }
+                });
+            });
+        }
+        
+        // These functions would rebuild the tab content if it's missing
+        function rebuildPersonalityTab() {
+            // This is a fallback if the HTML content somehow gets removed
+            const personalityTab = document.getElementById('nutrition');
+            if (!personalityTab) return;
+            
+            personalityTab.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2">
+                        <div class="bg-[#111827] rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-4">Personality Insights</h3>
+                            <!-- Personality metrics -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <!-- Personality metrics content -->
+                                <!-- ... (copy from your HTML) ... -->
+                            </div>
+                            
+                            <!-- More personality content -->
+                            <!-- ... (copy from your HTML) ... -->
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-[#111827] rounded-lg p-6 h-full">
+                            <!-- Communication style content -->
+                            <!-- ... (copy from your HTML) ... -->
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function rebuildInteractionsTab() {
+            // Similar fallback function for interactions tab
+            const interactionsTab = document.getElementById('workouts');
+            if (!interactionsTab) return;
+            
+            // Add similar rebuild HTML code here
+        }
+        
+        function rebuildEmotionsTab() {
+            // Similar fallback function for emotions tab
+            const emotionsTab = document.getElementById('progress');
+            if (!emotionsTab) return;
+            
+            // Add similar rebuild HTML code here
+        }
+    
+        // Testimonial slider functionality
+        function initTestimonialSlider() {
+            const testimonials = document.querySelectorAll('.testimonial');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.querySelector('.testimonial-arrow.prev');
+            const nextBtn = document.querySelector('.testimonial-arrow.next');
+            let currentIndex = 0;
+            
+            function showTestimonial(index) {
+                testimonials.forEach(testimonial => {
+                    testimonial.classList.add('hidden');
+                    testimonial.classList.remove('active');
+                });
+                
+                dots.forEach(dot => {
+                    dot.classList.remove('bg-primary');
+                    dot.classList.add('bg-[#374151]');
+                });
+                
+                testimonials[index].classList.remove('hidden');
+                testimonials[index].classList.add('active');
+                dots[index].classList.remove('bg-[#374151]');
+                dots[index].classList.add('bg-primary');
+                
+                currentIndex = index;
+            }
+            
+            // Event listeners for dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showTestimonial(index);
+                });
+            });
+            
+            // Event listeners for prev/next buttons
+            prevBtn.addEventListener('click', () => {
+                let newIndex = currentIndex - 1;
+                if (newIndex < 0) newIndex = testimonials.length - 1;
+                showTestimonial(newIndex);
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                let newIndex = currentIndex + 1;
+                if (newIndex >= testimonials.length) newIndex = 0;
+                showTestimonial(newIndex);
+            });
+            
+            // Auto-advance testimonials every 5 seconds
+            setInterval(() => {
+                let newIndex = currentIndex + 1;
+                if (newIndex >= testimonials.length) newIndex = 0;
+                showTestimonial(newIndex);
+            }, 5000);
+        }
+        
+        // Pricing toggle functionality
+        function initPricingToggle() {
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const amounts = document.querySelectorAll('.amount');
+            const periods = document.querySelectorAll('.period');
+            
+            const monthlyPrices = ['$9.99', '$19.99', '$29.99'];
+            const yearlyPrices = ['$99.99', '$199.99', '$299.99'];
+            
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Toggle active state
+                    toggleBtns.forEach(b => {
+                        b.classList.remove('bg-primary', 'text-white');
+                        b.classList.add('text-gray-light');
+                    });
+                    
+                    btn.classList.remove('text-gray-light');
+                    btn.classList.add('bg-primary', 'text-white');
+                    
+                    // Update prices based on selected billing period
+                    const billingPeriod = btn.getAttribute('data-billing');
+                    
+                    if (billingPeriod === 'yearly') {
+                        amounts.forEach((amount, index) => {
+                            amount.textContent = yearlyPrices[index];
+                        });
+                        
+                        periods.forEach(period => {
+                            period.textContent = '/ year';
+                        });
+                    } else {
+                        amounts.forEach((amount, index) => {
+                            amount.textContent = monthlyPrices[index];
+                        });
+                        
+                        periods.forEach(period => {
+                            period.textContent = '/ month';
+                        });
+                    }
+                });
+            });
+        }
+    
         // Hero Scene with Three.js
         function initHeroScene() {
             const canvas = document.getElementById('hero-canvas');
@@ -1816,99 +1363,105 @@
             directionalLight.position.set(1, 1, 1);
             scene.add(directionalLight);
             
-            // Create particle system for fitness theme
-            const particlesCount = 150;
-            const particles = new THREE.Group();
+            // Create neural network visualization
+            const networkGroup = new THREE.Group();
+            const nodes = [];
+            const connections = [];
+            const nodeCount = 50;
             
-            // Create different geometric shapes for particles
-            const geometries = [
-                new THREE.TetrahedronGeometry(0.1, 0),
-                new THREE.BoxGeometry(0.1, 0.1, 0.1),
-                new THREE.SphereGeometry(0.05, 10, 10),
-                new THREE.OctahedronGeometry(0.1, 0)
-            ];
-            
-            const materials = [
-                new THREE.MeshPhongMaterial({ color: 0x4361ee, flatShading: true }),
-                new THREE.MeshPhongMaterial({ color: 0x7209b7, flatShading: true }),
-                new THREE.MeshPhongMaterial({ color: 0xf72585, flatShading: true }),
-                new THREE.MeshPhongMaterial({ color: 0x4cc9f0, flatShading: true }),
-                new THREE.MeshPhongMaterial({ color: 0xffd700, flatShading: true })
-            ];
-            
-            // Store particle data for animations
-            const particleData = [];
-            
-            for (let i = 0; i < particlesCount; i++) {
-                const geomIndex = Math.floor(Math.random() * geometries.length);
-                const matIndex = Math.floor(Math.random() * materials.length);
+            // Create neural nodes
+            for (let i = 0; i < nodeCount; i++) {
+                const geometry = new THREE.SphereGeometry(0.05 + Math.random() * 0.05, 16, 16);
+                const material = new THREE.MeshPhongMaterial({ 
+                    color: new THREE.Color(
+                        0.5 + Math.random() * 0.5,
+                        0.2 + Math.random() * 0.5,
+                        0.8 + Math.random() * 0.2
+                    ),
+                    transparent: true,
+                    opacity: 0.7 + Math.random() * 0.3
+                });
                 
-                const particle = new THREE.Mesh(geometries[geomIndex], materials[matIndex]);
+                const node = new THREE.Mesh(geometry, material);
                 
                 // Random position in a sphere
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.acos(2 * Math.random() - 1);
-                const radius = 3 + Math.random() * 5;
+                const radius = 2 + Math.random() * 3;
                 
-                particle.position.x = radius * Math.sin(phi) * Math.cos(theta);
-                particle.position.y = radius * Math.sin(phi) * Math.sin(theta);
-                particle.position.z = radius * Math.cos(phi);
+                node.position.x = radius * Math.sin(phi) * Math.cos(theta);
+                node.position.y = radius * Math.sin(phi) * Math.sin(theta);
+                node.position.z = radius * Math.cos(phi);
                 
-                // Random rotation
-                particle.rotation.x = Math.random() * Math.PI;
-                particle.rotation.y = Math.random() * Math.PI;
-                particle.rotation.z = Math.random() * Math.PI;
-                
-                // Random scale
-                const scale = 0.3 + Math.random() * 1.5;
-                particle.scale.set(scale, scale, scale);
-                
-                // Store animation data
-                particleData.push({
-                    rotationSpeed: {
-                        x: (Math.random() - 0.5) * 0.01,
-                        y: (Math.random() - 0.5) * 0.01,
-                        z: (Math.random() - 0.5) * 0.01
-                    },
-                    movementSpeed: {
-                        theta: (Math.random() - 0.5) * 0.001,
-                        phi: (Math.random() - 0.5) * 0.001,
-                        radius: (Math.random() - 0.5) * 0.005
-                    },
-                    originalRadius: radius,
-                    pulseSpeed: 0.003 + Math.random() * 0.01,
+                node.userData = {
+                    originalPosition: node.position.clone(),
+                    pulseSpeed: 0.005 + Math.random() * 0.01,
                     pulseOffset: Math.random() * Math.PI * 2
-                });
+                };
                 
-                particles.add(particle);
+                nodes.push(node);
+                networkGroup.add(node);
             }
             
-            scene.add(particles);
-            
-            // Create fitness-themed background elements
-            
-            // Heartbeat line
-            const heartbeatPoints = [];
-            const heartbeatSegments = 100;
-            const heartbeatWidth = 5;
-            
-            for (let i = 0; i < heartbeatSegments; i++) {
-                const x = (i / heartbeatSegments) * heartbeatWidth * 2 - heartbeatWidth;
-                let y = 0;
+            // Create connections between nodes
+            for (let i = 0; i < nodeCount; i++) {
+                const connectionsCount = 1 + Math.floor(Math.random() * 3);
                 
-                // Create heartbeat pattern
-                if (i > heartbeatSegments * 0.45 && i < heartbeatSegments * 0.55) {
-                    const t = (i / heartbeatSegments - 0.45) * 10;
-                    y = Math.sin(t * Math.PI * 2) * 0.5;
+                for (let j = 0; j < connectionsCount; j++) {
+                    const targetIndex = Math.floor(Math.random() * nodeCount);
+                    
+                    if (i !== targetIndex) {
+                        const startNode = nodes[i];
+                        const endNode = nodes[targetIndex];
+                        
+                        const points = [startNode.position, endNode.position];
+                        const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+                        
+                        const lineMaterial = new THREE.LineBasicMaterial({ 
+                            color: 0x8b5cf6,
+                            transparent: true,
+                            opacity: 0.2 + Math.random() * 0.3
+                        });
+                        
+                        const line = new THREE.Line(lineGeometry, lineMaterial);
+                        line.userData = {
+                            startNodeIndex: i,
+                            endNodeIndex: targetIndex,
+                            pulseSpeed: 0.01 + Math.random() * 0.02,
+                            pulseOffset: Math.random() * Math.PI * 2
+                        };
+                        
+                        connections.push(line);
+                        networkGroup.add(line);
+                    }
                 }
-                
-                heartbeatPoints.push(new THREE.Vector3(x, y - 2, 0));
             }
             
-            const heartbeatGeometry = new THREE.BufferGeometry().setFromPoints(heartbeatPoints);
-            const heartbeatMaterial = new THREE.LineBasicMaterial({ color: 0xff3366, linewidth: 2 });
-            const heartbeatLine = new THREE.Line(heartbeatGeometry, heartbeatMaterial);
-            scene.add(heartbeatLine);
+            scene.add(networkGroup);
+            
+            // Add brain-like structure in the background
+            const brainGroup = new THREE.Group();
+            
+            // Create brain lobes
+            const lobeGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+            const lobeMaterial = new THREE.MeshPhongMaterial({
+                color: 0x6366f1,
+                transparent: true,
+                opacity: 0.1,
+                wireframe: true
+            });
+            
+            const leftLobe = new THREE.Mesh(lobeGeometry, lobeMaterial);
+            leftLobe.position.set(-1, 0, -3);
+            leftLobe.scale.set(1, 1.2, 1);
+            
+            const rightLobe = new THREE.Mesh(lobeGeometry, lobeMaterial);
+            rightLobe.position.set(1, 0, -3);
+            rightLobe.scale.set(1, 1.2, 1);
+            
+            brainGroup.add(leftLobe);
+            brainGroup.add(rightLobe);
+            scene.add(brainGroup);
             
             // Mouse movement effect
             let mouseX = 0;
@@ -1925,39 +1478,43 @@
                 requestAnimationFrame(animate);
                 time += 0.01;
                 
-                // Animate particles
-                particles.children.forEach((particle, index) => {
-                    const data = particleData[index];
+                // Animate neural nodes
+                nodes.forEach((node) => {
+                    const data = node.userData;
                     
-                    // Rotate particle
-                    particle.rotation.x += data.rotationSpeed.x;
-                    particle.rotation.y += data.rotationSpeed.y;
-                    particle.rotation.z += data.rotationSpeed.z;
+                    // Pulsating effect
+                    const pulseFactor = Math.sin(time * data.pulseSpeed + data.pulseOffset) * 0.1 + 1;
+                    node.scale.set(pulseFactor, pulseFactor, pulseFactor);
                     
-                    // Pulsating movement
-                    const pulseFactor = Math.sin(time * data.pulseSpeed + data.pulseOffset) * 0.2 + 1;
-                    
-                    // Calculate new position
-                    let theta = Math.atan2(particle.position.y, particle.position.x) + data.movementSpeed.theta;
-                    let phi = Math.acos(particle.position.z / data.originalRadius) + data.movementSpeed.phi;
-                    let radius = data.originalRadius * pulseFactor;
-                    
-                    particle.position.x = radius * Math.sin(phi) * Math.cos(theta);
-                    particle.position.y = radius * Math.sin(phi) * Math.sin(theta);
-                    particle.position.z = radius * Math.cos(phi);
+                    // Slight movement
+                    node.position.x = data.originalPosition.x + Math.sin(time * 0.2 + data.pulseOffset) * 0.05;
+                    node.position.y = data.originalPosition.y + Math.cos(time * 0.3 + data.pulseOffset) * 0.05;
+                    node.position.z = data.originalPosition.z + Math.sin(time * 0.4 + data.pulseOffset) * 0.05;
                 });
                 
-                // Animate heartbeat line
-                heartbeatPoints.forEach((point, i) => {
-                    const wave = Math.sin(time + i * 0.2) * 0.05;
-                    point.y = heartbeatPoints[i].y + wave;
+                // Animate connections
+                connections.forEach((connection) => {
+                    const data = connection.userData;
+                    const startNode = nodes[data.startNodeIndex];
+                    const endNode = nodes[data.endNodeIndex];
+                    
+                    // Update line positions
+                    const points = [startNode.position, endNode.position];
+                    connection.geometry.setFromPoints(points);
+                    
+                    // Pulsating opacity
+                    const pulseFactor = Math.sin(time * data.pulseSpeed + data.pulseOffset) * 0.3 + 0.5;
+                    connection.material.opacity = pulseFactor * 0.4;
                 });
-                heartbeatGeometry.setFromPoints(heartbeatPoints);
-                heartbeatLine.rotation.z = Math.sin(time * 0.1) * 0.1;
                 
-                // Rotate entire scene slightly based on mouse position
-                particles.rotation.y = mouseX * 0.2;
-                particles.rotation.x = mouseY * 0.2;
+                // Animate brain lobes
+                leftLobe.rotation.y = Math.sin(time * 0.1) * 0.1;
+                rightLobe.rotation.y = Math.sin(time * 0.1 + Math.PI) * 0.1;
+                
+                // Rotate based on mouse position
+                networkGroup.rotation.y = mouseX * 0.3;
+                networkGroup.rotation.x = mouseY * 0.3;
+                brainGroup.rotation.y = mouseX * 0.1;
                 
                 renderer.render(scene, camera);
             }
@@ -1971,10 +1528,12 @@
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
         }
-
+    
         // 3D Phone Scene
         function initPhoneScene() {
             const container = document.getElementById('phone-scene');
+            
+            if (!container) return;
             
             // Create scene
             const scene = new THREE.Scene();
@@ -2008,176 +1567,50 @@
                 roughness: 0.2
             });
             
-            const screenMaterial = new THREE.MeshStandardMaterial({
-                color: 0x4361ee,
-                emissive: 0x4361ee,
-                emissiveIntensity: 0.2
+            // Screen materials with cognitive app themes
+            const screen1Material = new THREE.MeshStandardMaterial({
+                color: 0x6366f1,
+                emissive: 0x6366f1,
+                emissiveIntensity: 0.3
             });
             
-            // Create three phones
-            const phone1 = createPhone(-1.5, 0, 0);
-            const phone2 = createPhone(0, 0, 1);
-            const phone3 = createPhone(1.5, 0, 0);
+            const screen2Material = new THREE.MeshStandardMaterial({
+                color: 0x8b5cf6,
+                emissive: 0x8b5cf6,
+                emissiveIntensity: 0.3
+            });
+            
+            const screen3Material = new THREE.MeshStandardMaterial({
+                color: 0xec4899,
+                emissive: 0xec4899,
+                emissiveIntensity: 0.3
+            });
+            
+            // Create three phones with different screen colors
+            const phone1 = createPhone(-1.5, 0, 0, screen1Material);
+            const phone2 = createPhone(0, 0, 1, screen2Material);
+            const phone3 = createPhone(1.5, 0, 0, screen3Material);
             
             scene.add(phone1);
             scene.add(phone2);
             scene.add(phone3);
             
-            function createPhone(x, y, z) {
+            function createPhone(x, y, z, screenMaterial) {
                 const phoneGroup = new THREE.Group();
                 
                 // Phone body
                 const body = new THREE.Mesh(phoneGeometry, phoneMaterial);
+                body.position.set(x, y, z);
+                phoneGroup.add(body);
                 
                 // Phone screen
-                const screenGeometry = new THREE.BoxGeometry(0.9, 1.9, 0.01);
-                const screen = new THREE.Mesh(screenGeometry, screenMaterial);
-                screen.position.z = 0.06;
-                
-                phoneGroup.add(body);
+                const screen = new THREE.Mesh(phoneGeometry, screenMaterial);
+                screen.position.set(x, y + 0.5, z + 0.05);
+                screen.scale.set(0.9, 1.8, 0.02);
                 phoneGroup.add(screen);
-                
-                phoneGroup.position.set(x, y, z);
                 
                 return phoneGroup;
             }
-            
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                
-                // Animate phones
-                phone1.position.y = Math.sin(Date.now() * 0.001) * 0.2;
-                phone2.position.y = Math.sin(Date.now() * 0.001 + 2) * 0.2;
-                phone3.position.y = Math.sin(Date.now() * 0.001 + 4) * 0.2;
-                
-                phone1.rotation.y = Math.sin(Date.now() * 0.0005) * 0.2;
-                phone2.rotation.y = Math.sin(Date.now() * 0.0005 + 2) * 0.2;
-                phone3.rotation.y = Math.sin(Date.now() * 0.0005 + 4) * 0.2;
-                
-                renderer.render(scene, camera);
-            }
-            
-            animate();
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-        }
-
-        // Tab Switching
-        function initTabs() {
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const tabPanes = document.querySelectorAll('.tab-pane');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Remove active class from all buttons
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // Add active class to clicked button
-                    button.classList.add('active');
-                    
-                    // Hide all tab panes
-                    tabPanes.forEach(pane => pane.classList.remove('active'));
-                    
-                    // Show the corresponding tab pane
-                    const tabId = button.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-        }
-
-        // Testimonial Slider
-        function initTestimonialSlider() {
-            const testimonials = document.querySelectorAll('.testimonial');
-            const dots = document.querySelectorAll('.dot');
-            const prevBtn = document.querySelector('.testimonial-arrow.prev');
-            const nextBtn = document.querySelector('.testimonial-arrow.next');
-            
-            let currentIndex = 0;
-            
-            function showTestimonial(index) {
-                // Hide all testimonials
-                testimonials.forEach(testimonial => testimonial.classList.remove('active'));
-                
-                // Remove active class from all dots
-                dots.forEach(dot => dot.classList.remove('active'));
-                
-                // Show the current testimonial
-                testimonials[index].classList.add('active');
-                
-                // Add active class to current dot
-                dots[index].classList.add('active');
-                
-                currentIndex = index;
-            }
-            
-            // Next button click
-            nextBtn.addEventListener('click', () => {
-                const nextIndex = (currentIndex + 1) % testimonials.length;
-                showTestimonial(nextIndex);
-            });
-            
-            // Previous button click
-            prevBtn.addEventListener('click', () => {
-                const prevIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
-                showTestimonial(prevIndex);
-            });
-            
-            // Dot click
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showTestimonial(index);
-                });
-            });
-            
-            // Auto slide
-            setInterval(() => {
-                const nextIndex = (currentIndex + 1) % testimonials.length;
-                showTestimonial(nextIndex);
-            }, 5000);
-        }
-
-        // Pricing Toggle
-        function initPricingToggle() {
-            const toggleBtns = document.querySelectorAll('.toggle-btn');
-            const prices = document.querySelectorAll('.amount');
-            const periods = document.querySelectorAll('.period');
-            
-            const monthlyPrices = ['$9.99', '$19.99', '$29.99'];
-            const yearlyPrices = ['$99.99', '$199.99', '$299.99'];
-            
-            toggleBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Remove active class from all buttons
-                    toggleBtns.forEach(b => b.classList.remove('active'));
-                    
-                    // Add active class to clicked button
-                    btn.classList.add('active');
-                    
-                    const billingCycle = btn.getAttribute('data-billing');
-                    
-                    if (billingCycle === 'monthly') {
-                        prices.forEach((price, index) => {
-                            price.textContent = monthlyPrices[index];
-                        });
-                        periods.forEach(period => {
-                            period.textContent = '/ month';
-                        });
-                    } else {
-                        prices.forEach((price, index) => {
-                            price.textContent = yearlyPrices[index];
-                        });
-                        periods.forEach(period => {
-                            period.textContent = '/ year';
-                        });
-                    }
-                });
-            });
         }
     </script>
 </body>
