@@ -201,6 +201,8 @@ def index(request):
         'exercise_notification': exercise_notification,
         'notification_preference': notification_preference,
         'notifications': notifications,
+        'weekdays': ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        'current_day': datetime.datetime.now().strftime("%A"),  # e.g., "Thursday"
     }
 
     # Update notification count logic

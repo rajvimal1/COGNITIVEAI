@@ -1,1318 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Font Awesome for the notification icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroScope - Your Cognitive Behavior Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-      @keyframes pulse {
-        0%, 100% {
-          opacity: 1;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        50% {
-          opacity: 0.5;
-        }
-      }
-      .animate-pulse {
-        animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      }
-      
-      @keyframes glow {
-        0% {
-          box-shadow: 0 0 3px 1px rgba(253, 126, 20, 0.4), 0 0 5px 2px rgba(239, 68, 68, 0.4);
-          box-shadow: 0 0 5px 2px rgba(253, 126, 20, 0.6), 0 0 8px 4px rgba(239, 68, 68, 0.6);
-        }
-        50% {
-          box-shadow: 0 0 10px 5px rgba(253, 126, 20, 0.9), 0 0 15px 7px rgba(239, 68, 68, 0.8);
-        }
-        100% {
-          box-shadow: 0 0 5px 2px rgba(253, 126, 20, 0.6), 0 0 8px 4px rgba(239, 68, 68, 0.6);
-        }
-      }
-      .notification-glow {
-        animation: glow 2s ease-in-out infinite;
-        background: rgb(239, 68, 68);
-        background: linear-gradient(45deg, rgba(239, 68, 68, 1) 0%, rgba(253, 126, 20, 1) 100%);
-        z-index: 10;
-      }
-      
-      /* AI Avatar Styles */
-      #ai-avatar {
-        position: relative;
-        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-        transition: all 0.5s ease;
-      }
-      
-      .avatar-shape {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        transition: all 0.8s ease;
-      }
-      
-      .avatar-shape:nth-child(1) {
-        width: 60%;
-        height: 60%;
-        top: 20%;
-        left: 20%;
-      }
-      
-      .avatar-shape:nth-child(2) {
-        width: 40%;
-        height: 40%;
-        top: 30%;
-        left: 30%;
-      }
-      
-      .avatar-shape:nth-child(3) {
-        width: 25%;
-        height: 25%;
-        top: 37.5%;
-        left: 37.5%;
-      }
-      
-      @keyframes morph1 {
-        0%, 100% { border-radius: 50%; transform: scale(1); }
-        25% { border-radius: 25% 75% 70% 30% / 30% 30% 70% 70%; transform: scale(0.9) rotate(10deg); }
-        50% { border-radius: 70% 30% 30% 70% / 70% 30% 70% 30%; transform: scale(1.1) rotate(-10deg); }
-        75% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: scale(0.9) rotate(10deg); }
-      }
-      
-      @keyframes morph2 {
-        0%, 100% { border-radius: 50%; transform: scale(1); }
-        25% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; transform: scale(1.1) rotate(-5deg); }
-        50% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: scale(0.9) rotate(5deg); }
-        75% { border-radius: 60% 40% 60% 30% / 30% 60% 40% 70%; transform: scale(1.1) rotate(-5deg); }
-      }
-      
-      @keyframes pulse-glow {
-        0%, 100% { box-shadow: 0 0 3px 1px rgba(59, 130, 246, 0.4); }
-        50% { box-shadow: 0 0 8px 3px rgba(59, 130, 246, 0.7); }
-      }
-      
-      .animate-avatar .avatar-shape:nth-child(1) {
-        animation: morph1 8s ease infinite, pulse-glow 3s ease infinite;
-      }
-      
-      .animate-avatar .avatar-shape:nth-child(2) {
-        animation: morph2 12s ease infinite;
-      }
-      
-      .animate-avatar .avatar-shape:nth-child(3) {
-        animation: pulse-glow 2s ease infinite;
-      }
-      
-      /* Additional speaking animation */
-      .animate-avatar .avatar-shape {
-        transition: transform 0.3s ease;
-      }
-      
-      /* Sound toggle button animation */
-      @keyframes sound-wave {
-        0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
-        100% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
-      }
-      
-      #toggle-sound-btn:active i {
-        animation: sound-wave 0.5s ease-out;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-900 min-h-screen text-gray-200">
-    <!-- Navigation bar -->
-    <nav class="bg-gray-800 border-b border-gray-700">
-      <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex-shrink-0 font-bold text-xl text-blue-400">
-            AptiFit
-          </div>
-          <div class="flex space-x-2 md:space-x-4 items-center">
-            <a href="{% url 'index' %}" class="px-3 py-2 rounded-md text-sm font-medium bg-gray-700 text-white">
-              Home
-            </a>
-            
-            {% if user.userprofile.height and user.userprofile.weight and user.userprofile.sex and user.userprofile.age %}
-            <a href="{% url 'diet_tracker' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-              Diet Tracker
-            </a>
-            <a href="{% url 'exercise_tracker' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-              Exercise Tracker
-            </a>
-            <a href="{% url 'health_tracker' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-              Health Tracker
-            </a>
-            <a href="{% url 'chatbot' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-              Chatbot
-            </a>
-            {% else %}
-            <span class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 cursor-not-allowed" title="Complete your profile to unlock this feature">
-              <i class="fas fa-lock mr-1"></i> Diet Tracker
-            </span>
-            <span class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 cursor-not-allowed" title="Complete your profile to unlock this feature">
-              <i class="fas fa-lock mr-1"></i> Exercise Tracker
-            </span>
-            <span class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 cursor-not-allowed" title="Complete your profile to unlock this feature">
-              <i class="fas fa-lock mr-1"></i> Health Tracker
-            </span>
-            <span class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 cursor-not-allowed" title="Complete your profile to unlock this feature">
-              <i class="fas fa-lock mr-1"></i> Chatbot
-            </span>
-            {% endif %}
-            
-            <a href="{% url 'profile' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-              Profile: {{ user.username }}
-            </a>
-            <div class="relative">
-              <a href="#" id="notification-btn" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-                <i class="fas fa-bell"></i>
-                {% if has_notifications or diet_notification or exercise_notification %}
-                  <span id="notification-indicator" class="absolute -top-1 -right-1 h-4 w-4 rounded-full animate-pulse notification-glow"></span>
-                {% endif %}
-              </a>
-            </div>
-            <a href="{% url 'community' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-              Community
-            </a>
-            <a href="{% url 'change_password' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">
-              Change Password
-            </a>
-            <a href="{% url 'logout' %}" class="px-3 py-2 rounded-md text-sm font-medium text-red-400 hover:bg-red-900 hover:text-red-200 transition duration-300">
-              Logout
-            </a>
-          </div>
-        </div>
-      </div>
-    </nav>
-    
-    <div class="container mx-auto px-4 py-8">
-      <!-- Welcome Section -->
-      <div class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-2">Welcome, {{ user.username }}!</h1>
-        <p class="text-gray-400">Your fitness journey dashboard</p>
-      </div>
-      
-      <!-- Dashboard Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Diet Plan Section -->
-        <div class="lg:col-span-2">
-          <div class="bg-gray-800 rounded-lg shadow-xl border border-gray-700 overflow-hidden">
-            <div class="bg-blue-800 text-white p-4 flex justify-between items-center">
-              <h2 class="text-xl font-bold">Your Diet Plan: {{ current_day }}</h2>
-              {% if daily_plan %}
-              <a href="{% url 'edit_diet' %}?day={{ current_day|lower }}" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded transition duration-300">
-                <i class="fas fa-edit mr-1"></i> Edit
-              </a>
-              {% endif %}
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(79, 70, 229, 0.6); }
+            50% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(79, 70, 229, 0.6); }
+        }
+        
+        .animate-fadeIn { animation: fadeIn 0.8s ease-in-out; }
+        .animate-slideInUp { animation: slideInUp 0.6s ease-out; }
+        .animate-pulse-slow { animation: pulse 3s infinite ease-in-out; }
+        .animate-gradient { 
+            background-size: 200% 200%;
+            animation: gradientFlow 5s ease infinite;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .animate-glow {
+            animation: glow 3s infinite;
+        }
+        
+        .cognitive-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .cognitive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.5);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1e1e2e;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation Bar -->
+    <nav class="bg-gradient-to-r from-indigo-900 to-purple-900 animate-gradient text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-brain text-2xl text-indigo-300"></i>
+                <h1 class="text-2xl font-bold">NeuroScope</h1>
             </div>
-            
-            <!-- AI Avatar for Diet Description -->
-            <div id="ai-avatar-container" class="relative bg-gradient-to-r from-gray-900 to-gray-800 p-4 border-b border-gray-700">
-              <div class="flex items-center">
-                <div id="ai-avatar" class="w-16 h-16 rounded-full bg-blue-600 flex-shrink-0 mr-4 flex items-center justify-center overflow-hidden relative">
-                  <div class="avatar-shape"></div>
-                  <div class="avatar-shape"></div>
-                  <div class="avatar-shape"></div>
-                </div>
-                <div class="flex-1">
-                  <div class="bg-gray-700 rounded-lg p-3 relative">
-                    <div class="absolute left-0 top-1/2 transform -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-r-8 border-b-8 border-transparent border-r-gray-700"></div>
-                    <p id="ai-message" class="text-gray-300">Click "Ask AI" button to analyze your diet plan.</p>
-                  </div>
-                  <div class="text-xs text-gray-500 mt-1 flex items-center">
-                    <i class="fas fa-robot mr-1"></i> AptiFit Assistant
-                    <div class="ml-auto flex items-center">
-                      <button id="ask-ai-btn" class="text-blue-400 hover:text-blue-300 mr-3">
-                        <i class="fas fa-robot mr-1"></i> Ask AI
-                      </button>
-                      <button id="play-again-btn" class="text-blue-400 hover:text-blue-300 hidden mr-3">
-                        <i class="fas fa-play-circle mr-1"></i> Play Again
-                      </button>
-                      <button id="toggle-sound-btn" class="text-blue-400 hover:text-blue-300">
-                        <i class="fas fa-volume-up"></i>
-                      </button>
+            <div class="hidden md:flex space-x-6">
+                <a href="{% url 'index' %}" class="hover:text-indigo-300 transition">Home</a>
+                <a href="#" class="hover:text-indigo-300 transition">Personality Analyzer</a>
+                <a href="#" class="hover:text-indigo-300 transition">Behavioral Insights</a>
+                <a href="#" class="hover:text-indigo-300 transition">Emotion Tracker</a>
+                <a href="{% url 'chatbot' %}" class="hover:text-indigo-300 transition">AI Companion</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="flex items-center space-x-2 hover:text-indigo-300 transition">
+                        <i class="fas fa-user-circle text-xl"></i>
+                        <span>{{ request.user.username }}</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 hidden border border-gray-700">
+                        <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-300 hover:bg-indigo-900">Profile</a>
+                        <a href="{% url 'community' %}" class="block px-4 py-2 text-gray-300 hover:bg-indigo-900">Community</a>
+                        <a href="{% url 'change_password' %}" class="block px-4 py-2 text-gray-300 hover:bg-indigo-900">Change Password</a>
+                        <a href="{% url 'logout' %}" class="block px-4 py-2 text-gray-300 hover:bg-indigo-900">Logout</a>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-            
-            <!-- Days of week navigation -->
-            {% if diet_plan.has_diet_plan %}
-            <div class="flex overflow-x-auto bg-gray-700 border-b border-gray-600">
-              <a href="{% url 'index' %}?day=monday" class="px-4 py-2 text-sm font-medium {% if current_day == 'Monday' %}bg-gray-600 text-white{% else %}text-gray-300 hover:bg-gray-600 hover:text-white{% endif %} transition duration-300">
-                Monday
-              </a>
-              <a href="{% url 'index' %}?day=tuesday" class="px-4 py-2 text-sm font-medium {% if current_day == 'Tuesday' %}bg-gray-600 text-white{% else %}text-gray-300 hover:bg-gray-600 hover:text-white{% endif %} transition duration-300">
-                Tuesday
-              </a>
-              <a href="{% url 'index' %}?day=wednesday" class="px-4 py-2 text-sm font-medium {% if current_day == 'Wednesday' %}bg-gray-600 text-white{% else %}text-gray-300 hover:bg-gray-600 hover:text-white{% endif %} transition duration-300">
-                Wednesday
-              </a>
-              <a href="{% url 'index' %}?day=thursday" class="px-4 py-2 text-sm font-medium {% if current_day == 'Thursday' %}bg-gray-600 text-white{% else %}text-gray-300 hover:bg-gray-600 hover:text-white{% endif %} transition duration-300">
-                Thursday
-              </a>
-              <a href="{% url 'index' %}?day=friday" class="px-4 py-2 text-sm font-medium {% if current_day == 'Friday' %}bg-gray-600 text-white{% else %}text-gray-300 hover:bg-gray-600 hover:text-white{% endif %} transition duration-300">
-                Friday
-              </a>
-              <a href="{% url 'index' %}?day=saturday" class="px-4 py-2 text-sm font-medium {% if current_day == 'Saturday' %}bg-gray-600 text-white{% else %}text-gray-300 hover:bg-gray-600 hover:text-white{% endif %} transition duration-300">
-                Saturday
-              </a>
-              <a href="{% url 'index' %}?day=sunday" class="px-4 py-2 text-sm font-medium {% if current_day == 'Sunday' %}bg-gray-600 text-white{% else %}text-gray-300 hover:bg-gray-600 hover:text-white{% endif %} transition duration-300">
-                Sunday
-              </a>
+            <button class="md:hidden">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Header Section -->
+        <section class="mb-10 animate-fadeIn">
+            <div class="bg-gradient-to-r from-indigo-800 to-purple-800 rounded-2xl p-8 text-white shadow-xl border border-indigo-700">
+                <h1 class="text-3xl font-bold mb-3">Welcome, {{ request.user.username }}!</h1>
+                <p class="text-xl text-indigo-200">Your cognitive behavior dashboard</p>
             </div>
-            {% endif %}
-            
-            <div class="p-5">
-              {% if daily_plan %}
-                <!-- Header with diet image as background banner -->
-                <div class="relative rounded-lg overflow-hidden mb-6 h-32">
-                  <img src="https://3.imimg.com/data3/DY/IN/MY-1492311/diet-plan-500x500.jpg" 
-                       alt="Diet Plan" class="w-full h-full object-cover blur-sm opacity-40">
-                  <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-transparent"></div>
-                  <div class="absolute inset-0 flex items-center p-6">
-                    <div>
-                      <h3 class="text-xl font-bold text-white">{{ current_day }}'s Meal Plan</h3>
-                      <p class="text-blue-200">Your personalized nutrition guide</p>
+        </section>
+
+        <!-- Personality Snapshot -->
+        <section class="mb-10 animate-slideInUp" style="animation-delay: 0.2s;">
+            <div class="bg-gray-800 rounded-xl shadow-md p-6 cognitive-card border border-gray-700">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-indigo-300">Your Personality Snapshot: Thursday</h2>
+                    <button class="text-indigo-400 hover:text-indigo-300 transition flex items-center">
+                        <i class="fas fa-edit mr-2"></i>
+                        <span>Edit your self-assessment or retake personality test</span>
+                    </button>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-4 flex items-center justify-between border border-gray-700">
+                    <p class="text-gray-300">Click "Ask AI" to analyze your behavior patterns and get personalized suggestions.</p>
+                    <button id="askAiBtn" class="bg-indigo-700 hover:bg-indigo-600 text-white px-6 py-2 rounded-lg transition flex items-center animate-pulse-slow">
+                        <i class="fas fa-brain mr-2"></i>
+                        <span>Ask AI</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weekly Check-ins -->
+        <section class="mb-10 animate-slideInUp" style="animation-delay: 0.4s;">
+            <div class="bg-gray-800 rounded-xl shadow-md p-6 cognitive-card border border-gray-700">
+                <h2 class="text-2xl font-bold text-indigo-300 mb-4">Weekly Check-ins</h2>
+                <div class="grid grid-cols-7 gap-2">
+                    <div class="bg-gray-700 rounded-lg p-3 text-center hover:bg-indigo-900 transition cursor-pointer border border-gray-600">
+                        <p class="font-medium">Monday</p>
                     </div>
-                  </div>
+                    <div class="bg-gray-700 rounded-lg p-3 text-center hover:bg-indigo-900 transition cursor-pointer border border-gray-600">
+                        <p class="font-medium">Tuesday</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-3 text-center hover:bg-indigo-900 transition cursor-pointer border border-gray-600">
+                        <p class="font-medium">Wednesday</p>
+                    </div>
+                    <div class="bg-indigo-900 border-2 border-indigo-500 rounded-lg p-3 text-center hover:bg-indigo-800 transition cursor-pointer">
+                        <p class="font-medium">Thursday</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-3 text-center hover:bg-indigo-900 transition cursor-pointer border border-gray-600">
+                        <p class="font-medium">Friday</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-3 text-center hover:bg-indigo-900 transition cursor-pointer border border-gray-600">
+                        <p class="font-medium">Saturday</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-3 text-center hover:bg-indigo-900 transition cursor-pointer border border-gray-600">
+                        <p class="font-medium">Sunday</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cognitive Insight -->
+        <section class="mb-10 animate-slideInUp" style="animation-delay: 0.6s;">
+            <div class="bg-gray-800 rounded-xl shadow-md p-6 cognitive-card border border-gray-700">
+                <h2 class="text-2xl font-bold text-indigo-300 mb-4">Thursday's Cognitive Insight</h2>
+                <p class="text-gray-400 mb-6">Your personalized behavioral and emotional understanding</p>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Morning -->
+                    <div class="bg-gradient-to-b from-gray-900 to-indigo-950 p-5 rounded-xl shadow-sm border border-gray-700">
+                        <h3 class="text-xl font-semibold text-indigo-300 mb-3">Morning</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-gray-400">Observed mood:</p>
+                                <p class="font-medium text-gray-200">Focused, Calm</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Likely activity preference:</p>
+                                <p class="font-medium text-gray-200">Problem-solving, solo work</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Suggestion:</p>
+                                <p class="font-medium text-gray-200">Engage in deep work or study sessions</p>
+                            </div>
+                            <div class="pt-2">
+                                <p class="text-indigo-400">
+                                    <i class="fas fa-brain mr-1"></i>
+                                    Estimated Cognitive Load: Moderate
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Afternoon -->
+                    <div class="bg-gradient-to-b from-gray-900 to-indigo-950 p-5 rounded-xl shadow-sm border border-gray-700">
+                        <h3 class="text-xl font-semibold text-indigo-300 mb-3">Afternoon</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-gray-400">Observed mood:</p>
+                                <p class="font-medium text-gray-200">Slightly Distracted</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Likely social orientation:</p>
+                                <p class="font-medium text-gray-200">Introverted but open to 1-on-1 conversations</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Suggestion:</p>
+                                <p class="font-medium text-gray-200">Take a break with light music or short walk</p>
+                            </div>
+                            <div class="pt-2">
+                                <p class="text-red-400">
+                                    <i class="fas fa-brain mr-1"></i>
+                                    Estimated Cognitive Load: High
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Evening -->
+                    <div class="bg-gradient-to-b from-gray-900 to-indigo-950 p-5 rounded-xl shadow-sm border border-gray-700">
+                        <h3 class="text-xl font-semibold text-indigo-300 mb-3">Evening</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-gray-400">Observed mood:</p>
+                                <p class="font-medium text-gray-200">Reflective, Slightly Tired</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Preferred activities:</p>
+                                <p class="font-medium text-gray-200">Journaling, Light reading, Conversations with close friends</p>
+                            </div>
+                            <div class="pt-2">
+                                <p class="text-green-400">
+                                    <i class="fas fa-brain mr-1"></i>
+                                    Estimated Cognitive Load: Low
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cognitive Metrics and Tips -->
+        <div class="grid md:grid-cols-2 gap-6 mb-10">
+            <!-- Cognitive Metrics -->
+            <section class="animate-slideInUp" style="animation-delay: 0.8s;">
+                <div class="bg-gray-800 rounded-xl shadow-md p-6 h-full cognitive-card border border-gray-700">
+                    <h2 class="text-2xl font-bold text-indigo-300 mb-4">Cognitive Metrics</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <p class="text-gray-300">Current Emotional Index:</p>
+                            <div class="flex items-center">
+                                <div class="w-24 bg-gray-700 rounded-full h-3 mr-2">
+                                    <div class="bg-green-500 h-3 rounded-full" style="width: 72%"></div>
+                                </div>
+                                <span class="font-medium text-green-400">0.72 (Balanced)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <p class="text-gray-300">Stress Level:</p>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full font-medium">Low</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <p class="text-gray-300">Social Engagement Score:</p>
+                            <span class="bg-blue-900 text-blue-300 px-3 py-1 rounded-full font-medium">Moderate</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <p class="text-gray-300">AI Behavior Match:</p>
+                            <span class="bg-indigo-900 text-indigo-300 px-3 py-1 rounded-full font-medium">INTP (Logician)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cognition Tips -->
+            <section class="animate-slideInUp" style="animation-delay: 1s;">
+                <div class="bg-gray-800 rounded-xl shadow-md p-6 h-full cognitive-card border border-gray-700">
+                    <h2 class="text-2xl font-bold text-indigo-300 mb-4">Cognition Tips</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-brain text-indigo-400 mt-1 mr-3"></i>
+                            <p class="text-gray-300">Reflect on your thought patterns to build awareness</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-comment-alt text-indigo-400 mt-1 mr-3"></i>
+                            <p class="text-gray-300">Try structured journaling to process complex emotions</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-coffee text-indigo-400 mt-1 mr-3"></i>
+                            <p class="text-gray-300">Take mindful breaks to reduce mental fatigue</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-sync-alt text-indigo-400 mt-1 mr-3"></i>
+                            <p class="text-gray-300">Practice active listening in social settings</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Cognitive Pattern Visualization (replacing AI Companion) -->
+        <section class="mb-10 animate-slideInUp" style="animation-delay: 1.2s;">
+            <div class="bg-gray-800 rounded-xl shadow-md p-6 cognitive-card border border-gray-700">
+                <h2 class="text-2xl font-bold text-indigo-300 mb-4">Neural Pattern Visualization</h2>
+                <p class="text-gray-400 mb-6">Your unique cognitive signature based on this week's activity</p>
+                
+                <div class="relative h-80 w-full bg-gradient-to-b from-gray-900 to-indigo-950 rounded-xl p-4 overflow-hidden border border-gray-700">
+                    <!-- Neural Network Visualization -->
+                    <div class="absolute w-full h-full">
+                        <!-- Neural nodes -->
+                        <div class="absolute top-1/4 left-1/4 w-4 h-4 bg-indigo-500 rounded-full animate-pulse-slow animate-glow"></div>
+                        <div class="absolute top-1/2 left-1/3 w-6 h-6 bg-purple-500 rounded-full animate-pulse-slow animate-glow" style="animation-delay: 0.5s"></div>
+                        <div class="absolute top-3/4 left-1/4 w-3 h-3 bg-blue-500 rounded-full animate-pulse-slow animate-glow" style="animation-delay: 1s"></div>
+                        <div class="absolute top-1/3 left-2/3 w-5 h-5 bg-indigo-400 rounded-full animate-pulse-slow animate-glow" style="animation-delay: 1.5s"></div>
+                        <div class="absolute top-2/3 left-3/5 w-4 h-4 bg-purple-400 rounded-full animate-pulse-slow animate-glow" style="animation-delay: 2s"></div>
+                        <div class="absolute top-1/5 left-3/4 w-3 h-3 bg-blue-400 rounded-full animate-pulse-slow animate-glow" style="animation-delay: 2.5s"></div>
+                        
+                        <!-- Neural connections as SVG lines -->
+                        <svg class="absolute inset-0 w-full h-full" style="z-index: 1">
+                            <line x1="25%" y1="25%" x2="33%" y2="50%" class="stroke-indigo-500 stroke-1 opacity-70" />
+                            <line x1="33%" y1="50%" x2="25%" y2="75%" class="stroke-indigo-500 stroke-1 opacity-70" />
+                            <line x1="33%" y1="50%" x2="67%" y2="33%" class="stroke-purple-500 stroke-1 opacity-70" />
+                            <line x1="67%" y1="33%" x2="60%" y2="67%" class="stroke-blue-500 stroke-1 opacity-70" />
+                            <line x1="60%" y1="67%" x2="75%" y2="20%" class="stroke-indigo-500 stroke-1 opacity-70" />
+                            <line x1="75%" y1="20%" x2="25%" y2="25%" class="stroke-purple-500 stroke-1 opacity-70" />
+                        </svg>
+                        
+                        <!-- Floating insight cards -->
+                        <div class="absolute top-5 right-5 bg-gray-800 bg-opacity-90 p-3 rounded-lg border border-indigo-700 shadow-lg animate-float w-52">
+                            <h3 class="font-medium text-indigo-300">Pattern Recognition</h3>
+                            <p class="text-xs text-gray-400">Your brain actively forms patterns based on 72% of new information</p>
+                        </div>
+                        
+                        <div class="absolute bottom-5 left-5 bg-gray-800 bg-opacity-90 p-3 rounded-lg border border-purple-700 shadow-lg animate-float w-52" style="animation-delay: 1.5s">
+                            <h3 class="font-medium text-purple-300">Focus Modulation</h3>
+                            <p class="text-xs text-gray-400">Deep focus periods average 38 minutes before needing reset</p>
+                        </div>
+                        
+                        <!-- Data stats -->
+                        <div class="absolute bottom-3 right-3 flex flex-col items-end">
+                            <span class="text-xs text-indigo-300">Neural Activity: 72%</span>
+                            <span class="text-xs text-purple-300">Pattern Quality: High</span>
+                            <span class="text-xs text-blue-300">Coherence: 86%</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="space-y-6">
-                  <!-- Breakfast -->
-                  <div class="space-y-2">
-                    <h3 class="text-lg font-semibold text-blue-400 flex items-center">
-                      <i class="fas fa-coffee mr-2"></i>Breakfast
-                    </h3>
-                    <div class="bg-gray-700 p-4 rounded-lg border border-gray-600">
-                      {% if daily_plan.breakfast %}
-                        <p>{{ daily_plan.breakfast }}</p>
-                        {% if daily_plan.breakfast_calories %}
-                          <p class="text-sm text-gray-400 mt-1">{{ daily_plan.breakfast_calories }} calories</p>
-                        {% endif %}
-                      {% else %}
-                        <p class="text-gray-400 italic">Ask the chatbot to generate a diet plan</p>
-                      {% endif %}
+                <div class="mt-4 grid grid-cols-3 gap-4">
+                    <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 hover:border-indigo-600 transition cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-indigo-300">Cognitive Focus</h3>
+                            <i class="fas fa-braille text-indigo-400"></i>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">72% above baseline</p>
+                        <div class="mt-2 h-1 bg-gray-700 rounded-full">
+                            <div class="h-1 bg-indigo-500 rounded-full" style="width: 72%"></div>
+                        </div>
                     </div>
-                  </div>
-                  
-                  <!-- Lunch -->
-                  <div class="space-y-2">
-                    <h3 class="text-lg font-semibold text-blue-400 flex items-center">
-                      <i class="fas fa-utensils mr-2"></i>Lunch
-                    </h3>
-                    <div class="bg-gray-700 p-4 rounded-lg border border-gray-600">
-                      <p>{{ daily_plan.lunch|default:"No lunch specified" }}</p>
-                      {% if daily_plan.lunch_calories %}
-                        <p class="text-sm text-gray-400 mt-1">{{ daily_plan.lunch_calories }} calories</p>
-                      {% endif %}
+                    
+                    <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 hover:border-indigo-600 transition cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-purple-300">Neuroplasticity</h3>
+                            <i class="fas fa-project-diagram text-purple-400"></i>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">High adaptability</p>
+                        <div class="mt-2 h-1 bg-gray-700 rounded-full">
+                            <div class="h-1 bg-purple-500 rounded-full" style="width: 85%"></div>
+                        </div>
                     </div>
-                  </div>
-                  
-                  <!-- Dinner -->
-                  <div class="space-y-2">
-                    <h3 class="text-lg font-semibold text-blue-400 flex items-center">
-                      <i class="fas fa-moon mr-2"></i>Dinner
-                    </h3>
-                    <div class="bg-gray-700 p-4 rounded-lg border border-gray-600">
-                      <p>{{ daily_plan.dinner|default:"No dinner specified" }}</p>
-                      {% if daily_plan.dinner_calories %}
-                        <p class="text-sm text-gray-400 mt-1">{{ daily_plan.dinner_calories }} calories</p>
-                      {% endif %}
+                    
+                    <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 hover:border-indigo-600 transition cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-blue-300">Memory Retention</h3>
+                            <i class="fas fa-memory text-blue-400"></i>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">68% efficiency</p>
+                        <div class="mt-2 h-1 bg-gray-700 rounded-full">
+                            <div class="h-1 bg-blue-500 rounded-full" style="width: 68%"></div>
+                        </div>
                     </div>
-                  </div>
-                  
-                  <!-- Snacks -->
-                  <div class="space-y-2">
-                    <h3 class="text-lg font-semibold text-blue-400 flex items-center">
-                      <i class="fas fa-apple-alt mr-2"></i>Snacks
-                    </h3>
-                    <div class="bg-gray-700 p-4 rounded-lg border border-gray-600">
-                      <p>{{ daily_plan.snacks|default:"No snacks specified" }}</p>
-                      {% if daily_plan.snacks_calories %}
-                        <p class="text-sm text-gray-400 mt-1">{{ daily_plan.snacks_calories }} calories</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                  
-                  <!-- Daily Total -->
-                  {% if daily_plan.total_calories %}
-                    <div class="bg-blue-900 p-4 rounded-lg text-white">
-                      <div class="flex justify-between items-center">
-                        <span class="font-semibold">Daily Total:</span>
-                        <span class="font-bold text-xl">{{ daily_plan.total_calories }} calories</span>
-                      </div>
-                    </div>
-                  {% endif %}
                 </div>
-              {% elif diet_plan.has_diet_plan %}
-                <div class="flex flex-col items-center justify-center py-10 text-center">
-                  <svg class="w-16 h-16 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                  </svg>
-                  <h3 class="text-lg font-medium text-gray-300 mb-2">No Diet Plan for {{ current_day }}</h3>
-                  <p class="text-gray-400 mb-6">You haven't set up your diet plan for this day yet.</p>
-                  <a href="{% url 'update_diet' %}?day={{ current_day|lower }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition duration-300">
-                    Create {{ current_day }} Diet Plan
-                  </a>
-                </div>
-              {% else %}
-                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-gray-700">
-                  <div class="md:flex">
-                    <div class="md:w-1/3 relative overflow-hidden">
-                      <img src="https://3.imimg.com/data3/DY/IN/MY-1492311/diet-plan-500x500.jpg" 
-                           alt="Diet Plan Template" class="w-full h-full object-cover">
-                      <!-- Overlay gradient -->
-                      <div class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-900 md:bg-gradient-to-l"></div>
-                    </div>
-                    <div class="p-6 md:w-2/3 flex flex-col justify-center">
-                      <h3 class="text-xl font-bold text-blue-400 mb-3">Personalize Your Nutrition</h3>
-                      
-                      {% if user.userprofile.height and user.userprofile.weight and user.userprofile.sex and user.userprofile.age %}
-                        <p class="text-gray-300 mb-6">Fuel your fitness journey with a custom diet plan tailored to your goals and preferences.</p>
-                        <a href="{% url 'chatbot' %}" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-300 w-max">
-                          <i class="fas fa-robot mr-2"></i> Get Diet Plan from Chatbot
-                        </a>
-                        <p class="text-sm text-gray-400 mt-4">Simple ask: "Generate a weekly diet plan for me based on my profile"</p>
-                      {% else %}
-                        <p class="text-gray-300 mb-6">We need your details to create a personalized nutrition plan that meets your specific needs.</p>
-                        <a href="{% url 'profile' %}" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-300 w-max">
-                          <i class="fas fa-user-edit mr-2"></i> Complete Your Profile
-                        </a>
-                        <p class="text-sm text-gray-400 mt-4">We need your height, weight, sex, and age to create a personalized diet plan.</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-              {% endif %}
             </div>
-          </div>
-        </div>
-        
-        <!-- Statistics and Tips Section -->
-        <div class="lg:col-span-1">
-          <div class="grid grid-cols-1 gap-6">
-            <!-- Fitness Stats -->
-            <div class="bg-gray-800 rounded-lg shadow-xl border border-gray-700 overflow-hidden">
-              <div class="bg-blue-800 text-white p-4">
-                <h2 class="text-xl font-bold">Your Stats</h2>
-              </div>
-              <div class="p-5 space-y-4">
-                {% if bmi %}
-                  <div class="space-y-1">
-                    <h3 class="text-sm font-medium text-gray-400">Current BMI</h3>
-                    <p class="text-2xl font-bold">{{ bmi }}</p>
-                    <p class="text-sm text-gray-400">{{ bmi_category }}</p>
-                  </div>
-                  
-                  <div class="space-y-1">
-                    <h3 class="text-sm font-medium text-gray-400">Body Fat</h3>
-                    <p class="text-2xl font-bold">{{ body_fat }}%</p>
-                    <p class="text-sm text-gray-400">{{ body_fat_category }}</p>
-                  </div>
-                  
-                  <div class="space-y-1">
-                    <h3 class="text-sm font-medium text-gray-400">Daily Calorie Need</h3>
-                    <p class="text-2xl font-bold">{{ daily_calories }} kcal</p>
-                  </div>
-                {% else %}
-                  <div class="text-center py-6">
-                    <p class="text-gray-400 mb-4">No stats available yet</p>
-                    <a href="{% url 'profile' %}" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded transition duration-300">
-                      Complete Profile
-                    </a>
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-            
-            <!-- Nutrition Tips -->
-            <div class="bg-gray-800 rounded-lg shadow-xl border border-gray-700 overflow-hidden">
-              <div class="bg-blue-800 text-white p-4">
-                <h2 class="text-xl font-bold">Nutrition Tips</h2>
-              </div>
-              <div class="p-5">
-                <ul class="space-y-3 text-gray-300">
-                  <li class="flex items-start">
-                    <span class="text-blue-400 mr-2">•</span>
-                    <span>Stay hydrated by drinking at least 8 glasses of water daily</span>
-                  </li>
-                  <li class="flex items-start">
-                    <span class="text-blue-400 mr-2">•</span>
-                    <span>Include protein in every meal to support muscle recovery</span>
-                  </li>
-                  <li class="flex items-start">
-                    <span class="text-blue-400 mr-2">•</span>
-                    <span>Eat a variety of colorful vegetables for essential nutrients</span>
-                  </li>
-                  <li class="flex items-start">
-                    <span class="text-blue-400 mr-2">•</span>
-                    <span>Limit processed foods and added sugars</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Notification popup -->
-    <div id="notification-popup" class="hidden fixed top-20 right-4 w-80 bg-gray-800 rounded-lg shadow-2xl border border-gray-700 overflow-hidden z-50">
-      <div class="bg-blue-800 text-white p-3 flex justify-between items-center">
-        <h3 class="font-bold">Notifications</h3>
-        <button id="close-notification" class="text-white hover:text-gray-300 transition duration-300">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div id="notification-content" class="p-4">
-        {% if notifications %}
-          {% for notification in notifications %}
-            <div class="notification-item py-2 {% if not forloop.last or diet_notification or exercise_notification %}border-b border-gray-700{% endif %}">
-              <p class="{% if notification.category == 'success' %}text-green-400{% elif notification.category == 'warning' %}text-yellow-400{% elif notification.category == 'error' %}text-red-400{% else %}text-gray-200{% endif %}">
-                {{ notification.message }}
-              </p>
-              <p class="text-xs text-gray-400 mt-1">{{ notification.timestamp }}</p>
-            </div>
-          {% endfor %}
-          
-          <!-- Show diet and exercise notifications after regular notifications -->
-          {% if diet_notification %}
-            <div class="notification-item py-2 {% if exercise_notification %}border-b border-gray-700{% endif %}">
-              <p><i class="fas fa-utensils mr-2 text-green-400"></i>{{ diet_notification }}</p>
-              <p class="text-xs text-gray-400 mt-1">Today</p>
-            </div>
-          {% endif %}
-          
-          {% if exercise_notification %}
-            <div class="notification-item py-2">
-              <p><i class="fas fa-dumbbell mr-2 text-blue-400"></i>{{ exercise_notification.message }}</p>
-              <p class="text-xs text-gray-400 mt-1">{{ exercise_notification.timestamp }}</p>
-            </div>
-          {% endif %}
-          
-        {% elif diet_notification or exercise_notification %}
-          {% if diet_notification %}
-            <div class="notification-item py-2 {% if exercise_notification %}border-b border-gray-700{% endif %}">
-              <p><i class="fas fa-utensils mr-2 text-green-400"></i>{{ diet_notification }}</p>
-              <p class="text-xs text-gray-400 mt-1">Today</p>
-            </div>
-          {% endif %}
-          
-          {% if exercise_notification %}
-            <div class="notification-item py-2">
-              <p><i class="fas fa-dumbbell mr-2 text-blue-400"></i>{{ exercise_notification.message }}</p>
-              <p class="text-xs text-gray-400 mt-1">{{ exercise_notification.timestamp }}</p>
-            </div>
-          {% endif %}
-        {% else %}
-          <div class="text-center py-3">
-            <i class="fas fa-bell-slash text-gray-500 text-2xl mb-2"></i>
-            <p class="text-gray-400">No new notifications</p>
-            <p class="text-xs text-gray-500 mt-2">Check back later for updates on your fitness journey</p>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-
-    <!-- AI Talking Avatar Section - Add after the Nutrition Tips section -->
-    <div class="bg-gray-800 rounded-lg shadow-xl border border-gray-700 overflow-hidden mt-6">
-      <div class="bg-blue-800 text-white p-4">
-        <h2 class="text-xl font-bold">AI Assistant</h2>
-      </div>
-      <div class="p-5">
-        <div id="ai-avatar-container" class="flex flex-col items-center">
-          <!-- Avatar video will be displayed here -->
-          <div id="avatar-video-container" class="w-full max-w-md rounded-lg overflow-hidden mb-4 bg-gray-900 flex items-center justify-center" style="min-height: 240px; aspect-ratio: 16/9;">
-            <video id="avatar-video" class="w-full h-full object-contain" controls playsinline></video>
-            <div id="avatar-loading" class="text-center hidden">
-              <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto mb-2"></div>
-              <p class="text-gray-400">Generating avatar response...</p>
-              <p class="text-xs text-gray-500 mt-2">This may take 30 seconds...</p>
-            </div>
-            <div id="avatar-placeholder" class="text-center">
-              <i class="fas fa-robot text-5xl text-gray-600 mb-2"></i>
-              <p class="text-gray-400">Ask a question to see the AI avatar</p>
-            </div>
-          </div>
-          
-          <div class="w-full flex flex-col space-y-3">
-            <!-- Voice recognition controls -->
-            <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
-              <div class="flex items-center space-x-2">
-                <button id="start-recording" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition duration-300">
-                  <i class="fas fa-microphone"></i>
-                </button>
-                <span id="recording-status" class="text-gray-400">Press to speak</span>
-              </div>
-              <div class="flex space-x-2">
-                <button id="stop-recording" class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full transition duration-300 hidden">
-                  <i class="fas fa-stop"></i>
-                </button>
-              </div>
-            </div>
-            
-            <!-- Text input as backup -->
-            <div class="flex space-x-2">
-              <input id="text-input" type="text" placeholder="Or type your question here..." 
-                     class="w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-2 focus:border-blue-500 focus:outline-none">
-              <button id="send-text-input" class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition duration-300">
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-            
-            <!-- Debug info panel -->
-            <div id="debug-panel" class="bg-gray-900 p-2 rounded-lg text-xs text-gray-400 hidden">
-              <p id="debug-info">Debug information will appear here</p>
-            </div>
-            
-            <!-- Conversation history - HIDDEN -->
-            <div id="conversation-history" class="hidden mt-4 max-h-60 overflow-y-auto bg-gray-700 rounded-lg p-2 space-y-3">
-              <div class="text-gray-400 text-center italic">
-                Your conversation will appear here
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </section>
+    </main>
 
     <script>
-      // Notification popup functionality
-      const notificationBtn = document.getElementById('notification-btn');
-      const notificationPopup = document.getElementById('notification-popup');
-      const closeNotification = document.getElementById('close-notification');
-      const notificationIndicator = document.getElementById('notification-indicator');
-      
-      notificationBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        notificationPopup.classList.toggle('hidden');
-        
-        // Don't hide the indicator when clicking - only mark as viewed in session storage
-        if (notificationIndicator) {
-          // Store in session storage that notifications have been viewed
-          sessionStorage.setItem('notificationsViewed', 'true');
-        }
-      });
-      
-      closeNotification.addEventListener('click', function() {
-        notificationPopup.classList.add('hidden');
-      });
-      
-      // Close popup when clicking outside
-      document.addEventListener('click', function(e) {
-        if (!notificationPopup.contains(e.target) && e.target !== notificationBtn) {
-          notificationPopup.classList.add('hidden');
-        }
-      });
-      
-      // Check if notifications have been viewed in this session - but don't hide the indicator
-      document.addEventListener('DOMContentLoaded', function() {
-        // Remove this code that hides the indicator
-        /*
-        if (notificationIndicator && sessionStorage.getItem('notificationsViewed') === 'true') {
-          notificationIndicator.style.display = 'none';
-        }
-        */
-      });
-      
-      // AI Avatar and speech functionality
-      document.addEventListener('DOMContentLoaded', function() {
-        const avatar = document.getElementById('ai-avatar');
-        const aiMessage = document.getElementById('ai-message');
-        const askAiBtn = document.getElementById('ask-ai-btn');
-        const playAgainBtn = document.getElementById('play-again-btn');
-        const toggleSoundBtn = document.getElementById('toggle-sound-btn');
-        
-        let isSpeaking = false;
-        let isSoundEnabled = true;
-        let speechSynthesis = window.speechSynthesis;
-        let currentUtterance = null;
-        
-        function startAvatarAnimation() {
-          avatar.classList.add('animate-avatar');
-        }
-        
-        function stopAvatarAnimation() {
-          avatar.classList.remove('animate-avatar');
-        }
-        
-        function updateSoundButton() {
-          const icon = toggleSoundBtn.querySelector('i');
-          if (isSoundEnabled) {
-            icon.className = 'fas fa-volume-up';
-            toggleSoundBtn.setAttribute('title', 'Mute');
-          } else {
-            icon.className = 'fas fa-volume-mute';
-            toggleSoundBtn.setAttribute('title', 'Unmute');
-          }
-        }
-        
-        function speakText(text) {
-          if (!isSoundEnabled || !speechSynthesis) return;
-          
-          // Cancel any ongoing speech
-          if (isSpeaking) {
-            speechSynthesis.cancel();
-          }
-          
-          // Create a new utterance
-          const utterance = new SpeechSynthesisUtterance(text);
-          currentUtterance = utterance;
-          
-          // Configure voice settings
-          utterance.rate = 1.0;  // Normal speed
-          utterance.pitch = 1.0; // Normal pitch
-          
-          // Get available voices and try to set a natural sounding one
-          const voices = speechSynthesis.getVoices();
-          if (voices.length > 0) {
-            // Prefer English voices
-            const englishVoices = voices.filter(voice => 
-              voice.lang.includes('en') && (voice.name.includes('Natural') || voice.name.includes('Neural'))
-            );
+        // Toggle dropdown menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileButton = document.querySelector('.relative button');
+            const dropdown = document.querySelector('.relative .absolute');
             
-            if (englishVoices.length > 0) {
-              utterance.voice = englishVoices[0];
-            }
-          }
-          
-          // Set speech events to sync with avatar animation
-          utterance.onstart = function() {
-            isSpeaking = true;
-            startAvatarAnimation();
-          };
-          
-          utterance.onend = function() {
-            isSpeaking = false;
-            stopAvatarAnimation();
-            playAgainBtn.classList.remove('hidden');
-          };
-          
-          utterance.onerror = function() {
-            isSpeaking = false;
-            stopAvatarAnimation();
-            playAgainBtn.classList.remove('hidden');
-          };
-          
-          // Start speaking
-          speechSynthesis.speak(utterance);
-        }
-        
-        function getDietDetails() {
-          startAvatarAnimation();
-          playAgainBtn.classList.add('hidden');
-          askAiBtn.classList.add('hidden');
-          
-          // Show loading message
-          aiMessage.textContent = "Analyzing your diet plan for today...";
-          
-          // Get diet plan details from the page
-          const hasDietPlan = {% if daily_plan %}true{% else %}false{% endif %};
-          
-          if (!hasDietPlan) {
-            const message = "I don't see a diet plan for today. Would you like me to help you create one?";
-            aiMessage.textContent = message;
-            speakText(message);
-            return;
-          }
-          
-          const dietData = {
-            day: "{{ current_day }}",
-            breakfast: "{{ daily_plan.breakfast|default:'Not specified'|escapejs }}",
-            breakfast_calories: "{{ daily_plan.breakfast_calories|default:'0' }}",
-            lunch: "{{ daily_plan.lunch|default:'Not specified'|escapejs }}",
-            lunch_calories: "{{ daily_plan.lunch_calories|default:'0' }}",
-            dinner: "{{ daily_plan.dinner|default:'Not specified'|escapejs }}",
-            dinner_calories: "{{ daily_plan.dinner_calories|default:'0' }}",
-            snacks: "{{ daily_plan.snacks|default:'Not specified'|escapejs }}",
-            snacks_calories: "{{ daily_plan.snacks_calories|default:'0' }}",
-            total_calories: "{{ daily_plan.total_calories|default:'0' }}"
-          };
-          
-          // Fetch AI response about the diet
-          fetch('{% url "get_diet_description" %}', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify(dietData)
-          })
-          .then(response => response.json())
-          .then(data => {
-            aiMessage.textContent = data.message;
-            speakText(data.message);
-          })
-          .catch(error => {
-            console.error('Error fetching diet description:', error);
-            const errorMessage = "I'm having trouble analyzing your diet plan right now. Please try again later.";
-            aiMessage.textContent = errorMessage;
-            speakText(errorMessage);
-          });
-        }
-        
-        // Initialize voices for Safari
-        if (speechSynthesis) {
-          speechSynthesis.onvoiceschanged = function() {
-            speechSynthesis.getVoices();
-          };
-        }
-        
-        // Toggle sound button
-        toggleSoundBtn.addEventListener('click', function() {
-          isSoundEnabled = !isSoundEnabled;
-          updateSoundButton();
-          
-          if (!isSoundEnabled && isSpeaking) {
-            speechSynthesis.cancel();
-            isSpeaking = false;
-            stopAvatarAnimation();
-            playAgainBtn.classList.remove('hidden');
-            askAiBtn.classList.add('hidden');
-          } else if (isSoundEnabled && !isSpeaking) {
-            speakText(aiMessage.textContent);
-          }
-        });
-        
-        // Don't start on page load - wait for button click
-        // getDietDetails();
-        
-        // Ask AI button
-        askAiBtn.addEventListener('click', function() {
-          getDietDetails();
-        });
-        
-        // Play again button
-        playAgainBtn.addEventListener('click', function() {
-          getDietDetails();
-        });
-        
-        // Add more animation when speaking
-        function pulseAvatar() {
-          if (isSpeaking) {
-            const shapes = avatar.querySelectorAll('.avatar-shape');
-            shapes.forEach((shape, index) => {
-              const scale = 0.9 + Math.random() * 0.2;
-              shape.style.transform = `scale(${scale})`;
-            });
-          }
-          requestAnimationFrame(pulseAvatar);
-        }
-        pulseAvatar();
-      });
-
-      // D-ID AI Avatar Integration
-      document.addEventListener('DOMContentLoaded', function() {
-        // Elements
-        const startRecordingBtn = document.getElementById('start-recording');
-        const stopRecordingBtn = document.getElementById('stop-recording');
-        const recordingStatus = document.getElementById('recording-status');
-        const textInput = document.getElementById('text-input');
-        const sendTextInputBtn = document.getElementById('send-text-input');
-        const conversationHistory = document.getElementById('conversation-history');
-        const avatarVideo = document.getElementById('avatar-video');
-        const avatarLoading = document.getElementById('avatar-loading');
-        const avatarPlaceholder = document.getElementById('avatar-placeholder');
-        const debugPanel = document.getElementById('debug-panel');
-        const debugInfo = document.getElementById('debug-info');
-        
-        // Show debug panel in development
-        const showDebug = {% if debug %}true{% else %}false{% endif %};
-        if (showDebug) {
-          debugPanel.classList.remove('hidden');
-        }
-        
-        // Variables for speech recognition
-        let recognition = null;
-        let isRecording = false;
-        let recognizedText = '';
-        let finalTranscript = '';
-        let interimTranscript = '';
-        
-        // Function to log debug messages
-        function debugLog(message) {
-          console.log('[AI Avatar]', message);
-          debugInfo.textContent = message;
-        }
-        
-        // Setup Web Speech API with better error handling
-        function setupSpeechRecognition() {
-          debugLog('Setting up speech recognition...');
-          
-          try {
-            // Check if browser supports speech recognition
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-            if (!SpeechRecognition) {
-              debugLog('Speech recognition not supported');
-              alert('Speech recognition is not supported in your browser. Please try Chrome or Edge.');
-              return false;
-            }
-            
-            recognition = new SpeechRecognition();
-            
-            // Configure for shorter sessions to avoid network timeouts
-            recognition.continuous = false;     // Changed to false to avoid network timeout
-            recognition.interimResults = true;  // Get interim results
-            recognition.lang = 'en-US';
-            
-            // Event handlers
-            recognition.onstart = function() {
-              isRecording = true;
-              finalTranscript = '';              // Clear transcript on new recording
-              interimTranscript = '';
-              recordingStatus.textContent = 'Listening...';
-              recordingStatus.classList.add('text-green-400');
-              recordingStatus.classList.remove('text-gray-400', 'text-red-400');
-              startRecordingBtn.classList.add('hidden');
-              stopRecordingBtn.classList.remove('hidden');
-              debugLog('Recording started');
-            };
-            
-            recognition.onresult = function(event) {
-              interimTranscript = '';
-              
-              for (let i = event.resultIndex; i < event.results.length; i++) {
-                const transcript = event.results[i][0].transcript;
+            if (profileButton && dropdown) {
+                profileButton.addEventListener('click', function() {
+                    dropdown.classList.toggle('hidden');
+                });
                 
-                if (event.results[i].isFinal) {
-                  finalTranscript += transcript + ' ';
-                  debugLog('Got transcript: ' + finalTranscript);
-                } else {
-                  interimTranscript += transcript;
-                }
-              }
-              
-              // Update status with current speech
-              if (interimTranscript) {
-                recordingStatus.textContent = interimTranscript;
-              } else if (finalTranscript) {
-                recordingStatus.textContent = finalTranscript;
-              }
-              
-              // Store the recognized text
-              recognizedText = finalTranscript;
-            };
-            
-            recognition.onerror = function(event) {
-              debugLog('Speech recognition error: ' + event.error);
-              
-              if (event.error === 'network') {
-                // Handle network errors by simply continuing with what we've captured so far
-                debugLog('Network error, using text captured so far: ' + recognizedText);
-                if (recognizedText.trim()) {
-                  stopRecording();
-                } else {
-                  // If we haven't captured anything yet, just show an error
-                  recordingStatus.textContent = 'Network error. Try using text input.';
-                  recordingStatus.classList.add('text-red-400');
-                  recordingStatus.classList.remove('text-green-400');
-                  stopRecording(true);
-                }
-              } else if (event.error === 'no-speech') {
-                // Just update the status but keep listening
-                recordingStatus.textContent = 'No speech detected. Keep talking...';
-              } else {
-                // For other errors, stop recording
-                stopRecording(true);
-              }
-            };
-            
-            recognition.onend = function() {
-              debugLog('Recognition ended');
-              
-              // Only restart if explicitly needed (we'll use manual restarts)
-              if (isRecording && !finalTranscript.trim()) {
-                // If we're still recording but don't have a transcript, restart
-                try {
-                  setTimeout(() => {
-                    if (isRecording) {
-                      recognition.start();
-                      debugLog('Restarted recognition');
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!profileButton.contains(event.target) && !dropdown.contains(event.target)) {
+                        dropdown.classList.add('hidden');
                     }
-                  }, 500);
-                } catch (e) {
-                  debugLog('Could not restart recognition: ' + e.message);
-                  stopRecording(true);
-                }
-              } else {
-                // If we have text or we're not recording, stop
-                stopRecording();
-              }
-            };
-            
-            return true;
-          } catch (error) {
-            debugLog('Error setting up speech recognition: ' + error.message);
-            alert('There was an error setting up speech recognition. Please try using the text input instead.');
-            return false;
-          }
-        }
-        
-        // Update startRecording function to use shorter sessions
-        function startRecording() {
-          if (!recognition && !setupSpeechRecognition()) {
-            return;
-          }
-          
-          try {
-            recognition.start();
-            debugLog('Starting speech recognition');
-          } catch (error) {
-            debugLog('Error starting recognition: ' + error.message);
-            alert('Could not start listening. Please try using text input instead.');
-          }
-        }
-        
-        function stopRecording(isError = false) {
-          if (recognition) {
-            try {
-              if (isRecording) {
-                recognition.stop();
-                debugLog('Stopping recognition');
-              }
-            } catch (error) {
-              debugLog('Error stopping recognition: ' + error.message);
+                });
             }
-          }
-          
-          isRecording = false;
-          
-          // Set the status text and color
-          if (isError) {
-            recordingStatus.textContent = 'Error, try again';
-            recordingStatus.classList.add('text-red-400');
-            recordingStatus.classList.remove('text-green-400', 'text-gray-400');
-          } else if (recognizedText.trim()) {
-            recordingStatus.textContent = recognizedText.trim();
-            recordingStatus.classList.add('text-gray-400');
-            recordingStatus.classList.remove('text-green-400', 'text-red-400');
-          } else {
-            recordingStatus.textContent = 'Press to speak';
-            recordingStatus.classList.add('text-gray-400');
-            recordingStatus.classList.remove('text-green-400', 'text-red-400');
-          }
-          
-          // Show/hide buttons
-          startRecordingBtn.classList.remove('hidden');
-          stopRecordingBtn.classList.add('hidden');
-          
-          // Process the text if we have a final transcript
-          if (!isError && recognizedText.trim()) {
-            // Give a moment for UI to update before processing
-            setTimeout(() => {
-              processUserQuery(recognizedText.trim());
-              recognizedText = '';
-              finalTranscript = '';
-            }, 300);
-          }
-        }
-        
-        // Function to add messages to the conversation history
-        function addMessageToHistory(message, sender) {
-          // We'll still track conversation state internally but not display it
-          // This keeps the logic intact without showing the conversation to the user
-          
-          // The conversation history div is now hidden with the "hidden" class
-          
-          // Clear initial message if it's the first real message
-          if (conversationHistory.querySelector('.italic')) {
-            conversationHistory.innerHTML = '';
-          }
-          
-          const messageElement = document.createElement('div');
-          messageElement.className = `p-2 rounded-lg ${sender === 'user' ? 'bg-blue-900 ml-12' : 'bg-gray-800 mr-12'}`;
-          
-          const contentWrapper = document.createElement('div');
-          contentWrapper.className = 'flex items-start';
-          
-          // Add icon based on sender
-          const iconElement = document.createElement('div');
-          iconElement.className = 'flex-shrink-0 mr-2';
-          iconElement.innerHTML = sender === 'user' 
-            ? '<i class="fas fa-user text-blue-400"></i>' 
-            : '<i class="fas fa-robot text-purple-400"></i>';
-          
-          const textElement = document.createElement('div');
-          textElement.className = 'text-white';
-          textElement.textContent = message;
-          
-          contentWrapper.appendChild(iconElement);
-          contentWrapper.appendChild(textElement);
-          messageElement.appendChild(contentWrapper);
-          
-          conversationHistory.appendChild(messageElement);
-          // We still update the scroll position in case the conversation history is ever shown
-          conversationHistory.scrollTop = conversationHistory.scrollHeight;
-        }
-        
-        // Function to show/hide loading indicator and placeholder
-        function setAvatarState(state) {
-          avatarVideo.classList.add('hidden');
-          avatarLoading.classList.add('hidden');
-          avatarPlaceholder.classList.add('hidden');
-          
-          if (state === 'loading') {
-            avatarLoading.classList.remove('hidden');
-          } else if (state === 'video') {
-            avatarVideo.classList.remove('hidden');
-          } else {
-            avatarPlaceholder.classList.remove('hidden');
-          }
-        }
-        
-        // Function to send user query to backend and generate D-ID video
-        async function processUserQuery(userText) {
-          debugLog('Processing query: ' + userText);
-          
-          // Add user message to hidden history
-          addMessageToHistory(userText, 'user');
-          
-          // Show loading indicator
-          setAvatarState('loading');
-          
-          // Since the conversation is hidden, we don't need to add processing messages
-          // but we'll keep the structure for code consistency
-          
-          try {
-            // First, get the GPT response - no token length limit since we support up to 45 min
-            debugLog('Sending request to process_speech_query');
-            const gptResponse = await fetch('{% url "process_speech_query" %}', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-              },
-              body: JSON.stringify({ query: userText })
+            
+            // Ask AI button functionality
+            const askAiBtn = document.getElementById('askAiBtn');
+            if (askAiBtn) {
+                askAiBtn.addEventListener('click', function() {
+                    // Implement AI functionality or open chatbot
+                    window.location.href = "{% url 'chatbot' %}";
+                });
+            }
+            
+            // Create animation for neural connections
+            const lines = document.querySelectorAll('svg line');
+            lines.forEach(line => {
+                setInterval(() => {
+                    line.classList.add('animate-pulse');
+                    setTimeout(() => {
+                        line.classList.remove('animate-pulse');
+                    }, 1000);
+                }, Math.random() * 5000 + 2000);
             });
-            
-            const gptData = await gptResponse.json();
-            debugLog('GPT response received: ' + (gptData.success ? 'Success' : 'Failed'));
-            
-            if (!gptData.success) {
-              throw new Error(gptData.message || 'Error processing your request');
-            }
-            
-            // Update loading message to indicate D-ID processing
-            document.querySelector('#avatar-loading p').textContent = 'Creating talking avatar (20-30 seconds)...';
-            
-            debugLog('Sending request to create_talking_avatar');
-            // Create D-ID talking avatar with the complete GPT response - we support up to 45 min with launch version
-            const didResponse = await fetch('{% url "create_talking_avatar" %}', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-              },
-              body: JSON.stringify({ message: gptData.response })
-            });
-            
-            const didData = await didResponse.json();
-            debugLog('D-ID initial response received: ' + (didData.success ? 'Success' : 'Failed'));
-            
-            if (!didData.success) {
-              throw new Error(didData.message || 'Error creating talking avatar');
-            }
-            
-            // Check if we need to poll for completion (for production environments)
-            if (didData.pending && didData.talk_id) {
-              // Start polling for completion
-              await pollAvatarStatus(didData.talk_id);
-            } else if (didData.video_url) {
-              // Direct response with video URL (for local development)
-              setAvatarVideo(didData.video_url);
-            } else {
-              throw new Error('Invalid response from server');
-            }
-          } catch (error) {
-            debugLog('Error: ' + error.message);
-            
-            setAvatarState('placeholder');
-            // Still track errors in the hidden conversation history
-            addMessageToHistory('Sorry, there was an error: ' + error.message, 'ai');
-            
-            // But also show an error message to the user visually
-            // We can use alerts or a floating notification since conversation is hidden
-            const errorContainer = document.createElement('div');
-            errorContainer.className = 'p-3 mb-4 bg-red-800 text-white rounded-md text-center';
-            errorContainer.textContent = 'Error: ' + error.message;
-            
-            const videoContainer = document.getElementById('avatar-video-container');
-            videoContainer.parentNode.insertBefore(errorContainer, videoContainer.nextSibling);
-            
-            // Remove error after 5 seconds
-            setTimeout(() => {
-              if (errorContainer.parentNode) {
-                errorContainer.parentNode.removeChild(errorContainer);
-              }
-            }, 5000);
-          }
-        }
-        
-        // New function to poll for avatar completion
-        async function pollAvatarStatus(talkId) {
-          const maxAttempts = 30; // 30 attempts with 2-second delay = 60 seconds max
-          const pollingInterval = 2000; // 2 seconds
-          
-          debugLog('Starting to poll for avatar status');
-          
-          for (let attempt = 0; attempt < maxAttempts; attempt++) {
-            debugLog(`Polling attempt ${attempt + 1}/${maxAttempts}`);
-            
-            try {
-              const statusResponse = await fetch('{% url "check_avatar_status" %}', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ talk_id: talkId })
-              });
-              
-              const statusData = await statusResponse.json();
-              
-              if (!statusData.success) {
-                throw new Error(statusData.message || 'Error checking avatar status');
-              }
-              
-              if (statusData.completed) {
-                // Avatar is ready
-                debugLog('Avatar generation completed');
-                setAvatarVideo(statusData.video_url);
-                return;
-              }
-              
-              // Update loading message with current status
-              document.querySelector('#avatar-loading p').textContent = 
-                `Creating avatar... Status: ${statusData.status} (attempt ${attempt + 1}/${maxAttempts})`;
-              
-              // Wait before next polling attempt
-              await new Promise(resolve => setTimeout(resolve, pollingInterval));
-            } catch (error) {
-              debugLog('Error polling for status: ' + error.message);
-              // Continue polling despite errors
-              await new Promise(resolve => setTimeout(resolve, pollingInterval));
-            }
-          }
-          
-          // If we reach here, polling timed out
-          throw new Error('Avatar generation timed out. Please try again.');
-        }
-        
-        // Function to set up the video when URL is available
-        function setAvatarVideo(videoUrl) {
-          const avatarVideo = document.getElementById('avatar-video');
-          
-          // Style the video container for avatar appearance
-          const videoContainer = document.getElementById('avatar-video-container');
-          videoContainer.style.borderRadius = '8px';
-          videoContainer.style.overflow = 'hidden';
-          videoContainer.style.width = '100%';
-          videoContainer.style.maxWidth = '360px';
-          videoContainer.style.margin = '0 auto';
-          videoContainer.style.aspectRatio = '4/3';
-          videoContainer.style.background = 'transparent';
-          videoContainer.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
-          videoContainer.style.border = '1px solid rgba(209, 213, 219, 0.2)';
-          
-          // Configure the video
-          avatarVideo.controls = false;
-          avatarVideo.style.width = '100%';
-          avatarVideo.style.height = '100%';
-          avatarVideo.style.objectFit = 'contain';
-          avatarVideo.style.backgroundColor = 'transparent';
-          
-          // Set video source
-          avatarVideo.src = videoUrl;
-          avatarVideo.muted = false;
-          setAvatarState('video');
-          
-          // Play the video
-          const playPromise = avatarVideo.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(error => {
-              debugLog('Auto-play prevented: ' + error.message);
-              
-              // Create a play button if autoplay is blocked
-              const playMessage = document.createElement('div');
-              playMessage.className = 'absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer';
-              playMessage.innerHTML = '<div class="text-white text-center p-4"><i class="fas fa-play-circle text-4xl mb-2"></i><p>Click to play response</p></div>';
-              videoContainer.appendChild(playMessage);
-              
-              // Remove the message when clicked and play the video
-              playMessage.addEventListener('click', function() {
-                avatarVideo.play().catch(e => debugLog('Cannot play on click: ' + e.message));
-                playMessage.remove();
-              });
-            });
-          }
-        }
-        
-        // Event listeners
-        startRecordingBtn.addEventListener('click', startRecording);
-        stopRecordingBtn.addEventListener('click', function() {
-          stopRecording();
         });
-        
-        sendTextInputBtn.addEventListener('click', function() {
-          if (textInput.value.trim() !== '') {
-            processUserQuery(textInput.value.trim());
-            textInput.value = '';
-          }
-        });
-        
-        textInput.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter' && this.value.trim() !== '') {
-            processUserQuery(this.value.trim());
-            this.value = '';
-          }
-        });
-        
-        // Initialize
-        setAvatarState('placeholder');
-        debugLog('AI Avatar initialized');
-      });
-
-      // Add this function to initialize the avatar container properly
-      function initializeAvatarContainer() {
-        // Style the video container
-        const videoContainer = document.getElementById('avatar-video-container');
-        if (videoContainer) {
-          videoContainer.style.borderRadius = '8px';
-          videoContainer.style.overflow = 'hidden';
-          videoContainer.style.width = '100%';
-          videoContainer.style.maxWidth = '360px';
-          videoContainer.style.margin = '0 auto';
-          videoContainer.style.aspectRatio = '4/3';
-          videoContainer.style.background = 'transparent';
-          videoContainer.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
-        }
-        
-        // Update placeholder to show AI avatar image with transparent background
-        const avatarPlaceholder = document.getElementById('avatar-placeholder');
-        if (avatarPlaceholder) {
-          avatarPlaceholder.innerHTML = `
-            <div class="w-full h-full flex flex-col items-center justify-center">
-              <div class="w-3/4 h-3/4 rounded-lg overflow-hidden">
-                <img src="https://d-id-public-bucket.s3.us-west-2.amazonaws.com/alice.jpg" 
-                     alt="AI Assistant" class="w-full h-full object-contain">
-              </div>
-              <p class="text-gray-300 mt-3">Ask a question to activate the AI assistant</p>
-            </div>
-          `;
-        }
-      }
-
-      // Call this function when the page loads
-      document.addEventListener('DOMContentLoaded', function() {
-        initializeAvatarContainer();
-        // ... rest of your existing DOMContentLoaded code ...
-      });
     </script>
-  </body>
+</body>
 </html>
